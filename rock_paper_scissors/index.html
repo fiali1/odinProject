@@ -1,0 +1,84 @@
+<script>
+    function computerPlay() {
+        let dice = Math.round(Math.random() * 5 + 1);
+        let move;
+
+        switch(dice) {
+            case 1: 
+            case 2:
+                move = 'Rock';
+                break;
+            case 3: 
+            case 4:                
+                move = 'Paper';
+                break;
+            case 5: 
+            case 6:                
+                move =  'Scissors';
+                break;
+            default:
+                break;
+        }
+
+        return move;
+    }
+
+    function playRound(playerSelection, computerSelection, score) {
+        let cS = computerSelection.toLowerCase();
+        cS = cS.charAt(0).toUpperCase() + cS.slice(1);
+        let pS = playerSelection.toLowerCase();
+        pS = pS.charAt(0).toUpperCase() + pS.slice(1);
+
+       
+        if(
+            (cS == 'Rock' && pS == 'Scissors') ||
+            (cS == 'Paper' && pS == 'Rock') ||
+            (cS == 'Scissors' && pS == 'Paper')) 
+        {
+            score--;
+            console.log(`You Lose! ${cS} beats ${pS}`);
+        }
+
+        else if(
+            (pS == 'Rock' && cS == 'Scissors') ||
+            (pS == 'Paper' && cS == 'Rock') ||
+            (pS == 'Scissors' && cS == 'Paper'))
+        {
+            score++;
+            console.log(`You Win! ${pS} beats ${cS}`);
+        }
+
+        else if (cS === pS)
+            console.log(`It's a Tie! Both chose ${cS}`);
+
+        else
+            console.log('Error: insert "Rock", "Paper" or "Scissors"');
+
+        return score;
+    }
+
+    function game() {        
+        let score = 0;
+
+        for(let i = 0; i < 5; i++) {
+            const playerSelection = 'Rock';
+            const computerSelection = computerPlay();
+
+            console.log("Round " + (i + 1));            
+            score = playRound(playerSelection, computerSelection, score);
+        }
+
+        if(score > 0) 
+            return 'YOU WON!';
+        
+        else if(score < 0) 
+            return 'THE COMPUTER WON!';
+
+        else
+            return 'IT\'S A TIE!';
+
+    }
+
+    console.log(game());
+
+</script>

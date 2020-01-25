@@ -1,2 +1,2 @@
-### Run the website here:
+### Run the HTML here:
 https://raw.githack.com/fiali1/odinProject/master/web_development_101/etch-a-sketch/index.html

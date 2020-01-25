@@ -1,4 +1,3 @@
 ## Web Development 101:
-Introdução para a construção de websites funcionais. Base para os cursos posteriores.
-
-Aqui se encontram os projetos e exercícios do curso.
+Introduction to the development of working websites. The basis for the other courses. 
+Here are located the projects and exercises of this course.

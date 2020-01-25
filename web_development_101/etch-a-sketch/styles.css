@@ -39,3 +39,9 @@ body {
     text-align: center;
     background-color: #FFF;
 }
+
+summary {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgba(255, 255, 255, 0.829);
+    text-decoration: none;
+}

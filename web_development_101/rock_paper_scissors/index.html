@@ -41,7 +41,7 @@
 
             function finalMessage(score, index) {
                 let message = document.createElement('p');
-                if(index = 1)
+                if(index == 1)
                     message.textContent = `YOU'VE WON!`;
                 else 
                     message.textContent = `YOU'VE LOST!`;
@@ -126,6 +126,8 @@
                 resultsDiv.appendChild(resultsDisplay);
                 container.appendChild(resultsDiv);
                 
+                console.log(playerScore, pcScore);
+
                 if(playerScore == 5) {
                     finalMessage(score, 1);
                     playAgain(container, score);

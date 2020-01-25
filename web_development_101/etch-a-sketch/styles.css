@@ -41,6 +41,9 @@ body {
 }
 
 summary {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: rgba(255, 255, 255, 0.829);
     text-decoration: none;

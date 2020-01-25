@@ -1,1 +1,2 @@
-From The Odin Project's [curriculum](http://www.theodinproject.com/courses/web-development-101/lessons/html-css)
+### View the HTML here
+https://htmlpreview.github.io/?https://github.com/fiali1/odinProject/blob/master/web_development_101/chrome-homepage/index.html

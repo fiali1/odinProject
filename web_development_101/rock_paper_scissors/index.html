@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock, Paper, Scissors</title>
+    </head>
+    <body>
+        <button id='btn1' data-key='1'>ROCK</button>
+        <button id='btn2' data-key='2'>PAPER</button>
+        <button id='btn3' data-key='3'>SCISSORS</button>
+
+        <h2 id='score'>Player: 0 | PC: 0</h2>
+        <div id='container'></div>
+
+        <script>
+            let playerScore = 0, pcScore = 0;
+            let lock = false;
+
+            function computerPlay() {
+                let dice = Math.round(Math.random() * 5 + 1);
+                let move;
+
+                switch(dice) {
+                    case 1: 
+                    case 2:
+                        move = 'Rock';
+                        break;
+                    case 3: 
+                    case 4:                
+                        move = 'Paper';
+                        break;
+                    case 5: 
+                    case 6:                
+                        move =  'Scissors';
+                        break;
+                    default:
+                        break;
+                }
+
+                return move;
+            };
+
+            function finalMessage(score, index) {
+                let message = document.createElement('p');
+                if(index = 1)
+                    message.textContent = `YOU'VE WON!`;
+                else 
+                    message.textContent = `YOU'VE LOST!`;
+                score.appendChild(message);
+            };
+
+            function playAgain(container, score) {
+                lock = true;
+                playerScore = pcScore = 0;
+
+                container.removeChild(container.childNodes[0]);
+
+                let playAgainBtn = document.createElement('button');
+                playAgainBtn.textContent = 'Play Again?';
+                container.appendChild(playAgainBtn);
+
+                playAgainBtn.onclick = () => {
+                    lock = false;
+                    score.textContent = 'Player: 0 | PC: 0';
+                    playAgainBtn.remove();
+                }
+
+            };
+
+            function playRound(playerSelection, computerSelection,) {
+                //Prevents player moves after the game ends
+                if(lock)
+                    return;
+                
+                //move formatting
+                let cS = computerSelection.toLowerCase();
+                cS = cS.charAt(0).toUpperCase() + cS.slice(1);
+                let pS = playerSelection.toLowerCase();
+                pS = pS.charAt(0).toUpperCase() + pS.slice(1);
+
+                //move display
+                const playerDisplay = document.createElement('p');
+                playerDisplay.textContent = 'Player chose: ' + pS;
+
+                const cpuDisplay = document.createElement('p');
+                cpuDisplay.textContent = 'Computer chose: ' + cS;
+
+                let resultsDisplay = document.createElement('p');
+            
+                //conditions win/lose/tie and scoring
+                if(
+                    (cS == 'Rock' && pS == 'Scissors') ||
+                    (cS == 'Paper' && pS == 'Rock') ||
+                    (cS == 'Scissors' && pS == 'Paper')) 
+                {
+                    pcScore++;
+                    resultsDisplay.textContent = `You Lose! ${cS} beats ${pS}`;
+                }
+
+                else if(
+                    (pS == 'Rock' && cS == 'Scissors') ||
+                    (pS == 'Paper' && cS == 'Rock') ||
+                    (pS == 'Scissors' && cS == 'Paper'))
+                {
+                    playerScore++;
+                    resultsDisplay.textContent = `You Win! ${pS} beats ${cS}`;
+                }
+
+                else if (cS === pS)
+                    resultsDisplay.textContent = `It's a Tie! Both chose ${cS}`;
+
+                else
+                    console.log('Error: insert "Rock", "Paper" or "Scissors"');
+
+                //DOM manipulation
+                let container = document.querySelector('#container');
+                let resultsDiv = document.createElement('div');
+                let score = document.querySelector('#score');
+    
+                score.textContent = `Player: ${playerScore} | PC: ${pcScore}`;
+    
+                if(container.hasChildNodes())
+                    container.removeChild(container.childNodes[0]);
+            
+                resultsDiv.appendChild(playerDisplay);
+                resultsDiv.appendChild(cpuDisplay);
+                resultsDiv.appendChild(resultsDisplay);
+                container.appendChild(resultsDiv);
+                
+                if(playerScore == 5) {
+                    finalMessage(score, 1);
+                    playAgain(container, score);
+                }
+                else if(pcScore == 5) {
+                    finalMessage(score, 0);
+                    playAgain(container, score);
+                }
+                
+            };
+
+            function game(playerMove) {        
+                const computerSelection = computerPlay();
+        
+                (playRound(playerMove, computerSelection));
+            };
+
+            const playerSelectionBtns = document.querySelectorAll('button');
+
+            playerSelectionBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const dataKey = e.target.getAttribute('data-key');
+                    
+                    if(dataKey == 1)
+                        game('rock');
+                    else if(dataKey == 2)
+                        game('paper');
+                    else if(dataKey == 3)
+                        game('scissors');
+                    else
+                        return;
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href='./styles.css'/>
+    </head>
+    <body>
+        <button id='clearBtn'>Clear Grid</button>
+        <div class='container'></div>
+
+        <script>
+            let container = document.querySelector('.container');
+
+            function generateColor() {
+                return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+            }
+
+            function changeColor(e) {
+                console.log(e.target);
+                e.target.style.backgroundColor = generateColor();
+            }
+
+            function addEvent() {
+                let divItems = document.querySelectorAll('.divItem');
+
+                divItems.forEach(item => {
+                    item.addEventListener('mouseover', changeColor);
+                });
+            }
+            
+            function makeGrid(size) {
+                for(i = 0; i < (size * size); i++) {
+                    let divItem = document.createElement('div');
+                    divItem.className = 'divItem';
+                    container.style.setProperty('grid-template-columns', `repeat(${size}, 1fr)`);
+                    container.style.setProperty('grid-template-rows', `repeat(${size}, 1fr)`);
+                    container.append(divItem);
+                }
+                addEvent();
+            }
+
+            let clearBtn = document.querySelector('#clearBtn');
+
+            function clearGrid() {
+                let divItems = document.querySelectorAll('.divItem');
+
+                divItems.forEach(item => {
+                    item.remove();
+                });
+
+                let size = prompt('Enter grid size');
+
+                makeGrid(size, size);
+            }
+
+            clearBtn.addEventListener('click', clearGrid);
+
+            makeGrid(16, 16);
+        </script>
+    </body>
+</html>

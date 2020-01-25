@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+}
+
+.divItem {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: center;
+}

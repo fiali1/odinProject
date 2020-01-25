@@ -5,29 +5,71 @@
         <title>Etch-a-Sketch</title>
     </head>
     <body>
-        <button id='clearBtn'>Clear Grid</button>
+        <div class="buttons">
+            <button id='generateBtn'>Generate Grid</button>
+            <button id='clearBtn'>Clear Grid</button>
+            <button id='randomBtn'>Random Colors</button>
+            <button id='greyscaleBtn'>Greyscale</button>
+        </div>
+
         <div class='container'></div>
 
         <script>
             let container = document.querySelector('.container');
 
             function generateColor() {
-                return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+                return '#' + (Math.random() * 0xFFFFFF<<0).toString(16);
             }
 
-            function changeColor(e) {
-                console.log(e.target);
+            function changeColorRandom(e) {
                 e.target.style.backgroundColor = generateColor();
             }
 
-            function addEvent() {
+            function eventRandom() {
                 let divItems = document.querySelectorAll('.divItem');
 
                 divItems.forEach(item => {
-                    item.addEventListener('mouseover', changeColor);
+                    if(item.getAttribute('type', 'greyscale'))
+                        item.removeEventListener('mouseover', changeColorGreyscale);
+                    item.setAttribute('type', 'random');
+                    item.addEventListener('mouseover', changeColorRandom);
+                });
+            }
+
+            function changeColorGreyscale(e) {
+                let color = e.target.getAttribute('value');
+
+                color -= 25;
+
+                e.target.setAttribute('value', color);
+
+                e.target.style.backgroundColor = `rgb(${color}, ${color}, ${color})`;
+            }
+
+            function eventGreyscale() {
+                let divItems = document.querySelectorAll('.divItem');
+
+                divItems.forEach(item => {
+                    if(item.getAttribute('type', 'random'))
+                        item.removeEventListener('mouseover', changeColorRandom);
+                    item.setAttribute('type', 'greyscale');
+                    item.setAttribute('value', 255);
+                    item.addEventListener('mouseover', changeColorGreyscale);
                 });
             }
             
+            function clearGrid() {
+                let divItems = document.querySelectorAll('.divItem');
+
+                divItems.forEach(item => {
+                    item.style.transition = '0.2s ease';
+                    item.style.backgroundColor = '#FFF';
+                    setTimeout(() => {
+                        item.removeAttribute('style', 'transition');
+                    }, 200);
+                });
+            }
+
             function makeGrid(size) {
                 for(i = 0; i < (size * size); i++) {
                     let divItem = document.createElement('div');
@@ -36,26 +78,45 @@
                     container.style.setProperty('grid-template-rows', `repeat(${size}, 1fr)`);
                     container.append(divItem);
                 }
-                addEvent();
             }
 
-            let clearBtn = document.querySelector('#clearBtn');
-
-            function clearGrid() {
+            function generateGrid() {
                 let divItems = document.querySelectorAll('.divItem');
+                let type;
 
                 divItems.forEach(item => {
+                    if(item.getAttribute('type') === 'random')
+                        type = 1;
+                    else if(item.getAttribute('type') === 'greyscale')
+                        type = 2;
+                    else 
+                        type = 0;
+
                     item.remove();
                 });
 
                 let size = prompt('Enter grid size');
 
                 makeGrid(size, size);
+
+                if(type == 1)
+                    eventRandom();
+                else if(type == 2)
+                    eventGreyscale();
             }
 
+            let clearBtn = document.querySelector('#clearBtn');
+            let randomBtn = document.querySelector('#randomBtn');
+            let greyscaleBtn = document.querySelector('#greyscaleBtn');
+
+            generateBtn.addEventListener('click', generateGrid);
             clearBtn.addEventListener('click', clearGrid);
+            randomBtn.addEventListener('click', eventRandom);
+            greyscaleBtn.addEventListener('click', eventGreyscale);
+            
 
             makeGrid(16, 16);
+            eventGreyscale();
         </script>
     </body>
 </html>

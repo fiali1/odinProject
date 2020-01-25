@@ -1,9 +1,41 @@
+body {
+    background-color: #da1414;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+    justify-content: center;
+}
+.buttons button{
+    display: inline-block;
+    color: #ffffff;
+    font-weight: bold;
+    background: none;
+    border: 1px solid #FFF;
+    border-radius: 3px;
+    padding: 10px;
+    transition: .5s ease;
+}
+
+.buttons button:hover {
+    color: #da1414;
+    background-color: #FFF;
+}
+
 .container {
+    width: 730px;
+    height: 730px;
+    margin: auto;
+    margin-top: 20px;
     display: grid;
+    border: 2px solid #a8a8a8;
+    border-radius: 3px;
 }
 
 .divItem {
-    padding: 1em;
     border: 1px solid #ddd;
     text-align: center;
+    background-color: #FFF;
 }

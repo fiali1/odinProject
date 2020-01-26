@@ -1,6 +1,6 @@
 # Odin Project
 
-### Curriculum provided by The Odin Project, divided in courses that focus on fullstack Ruby on Rails development.
+### Curriculum provided by The Odin Project. This track is divided in courses that focus on fullstack JavaScript development.
 
 The Odin Project provides a free open source coding curriculum that can be taken entirely online.
 Since it’s inception, it has helped many students get hired as developers and has assisted countless others learn enough programming to work on their own personal projects.

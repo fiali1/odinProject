@@ -3,28 +3,67 @@
     src: url('./fonts/7\ Segment.ttf');
 }
 
+* {
+    outline: none;
+}
+
 body {
     background-color: #4296ac;
 }
 
 #calculatorContainer {
     padding: 25px;
-    max-width: 500px;
+    max-width: 450px;
+    max-height: 600px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 50px;
     background-color: #b9b9b9;
     border: 3px solid #e6e5e5;
     border-radius: 10px;
-    box-shadow: 5px 7px #104f53;
+    box-shadow: 5px 5px #104f53;
 }
 
-.keyContainer {
-    display: flex;
-    flex-direction: row;
-    height: 500px;
-    margin: 0 auto;
-    margin-top: 20px;
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 10px;
+}
+
+.buttons button {
+    user-select: none;
+    padding: 6px;
+    margin: 0 2px;
+    color: #EEE;
+    font-weight: bold;
+    text-shadow: 0px 0px 1.5px #727272;
     border-radius: 3px;
+}
+
+#power {
+    color: #e2e2e2;
+    background-color: #d44d4d;
+    border: 2px solid #a03b3b;
+}
+
+#power:hover {
+    background-color: #fa5b5b;
+}
+
+#power:active {
+    background-color: #a74040;
+}
+
+#clear {
+    background-color: #acabab;
+    border: 2px solid #818181;
+}
+
+#clear:hover {
+    background-color: #b8b8b8;
+}
+
+#clear:active {
+    background-color: #5f5f5f;
 }
 
 .display {
@@ -36,25 +75,33 @@ body {
     padding: 20px;
     font-family: 'Segment7';
     font-size: 48px;
+    text-shadow: 1.15px 1.15px #929292;
 }
 
+.keysContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-radius: 3px;
+    font-family: Ubuntu, sans-serif;
+}
 
 .digits {
     width: 75%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border: 2px solid #a8a8a8;
-    border-radius: 5px;
+    gap: 2px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
 .operations {
+    margin-left: 2px;
     width: 25%;
     display: grid;
     grid-template-columns: 1fr;
-    border: 2px solid #a8a8a8;
-    border-radius: 5px;   
+    gap: 2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -64,10 +111,23 @@ body {
     justify-content: center;
     align-items: center;
     color: #EEE;
-    font-family: Ubuntu, sans-serif;
     font-size: 30px;
+    text-shadow: 0px 0px 2px #727272;
     background-color: #777;
     border: 2px solid #a8a8a8;
+    border-radius: 5px;   
+}
+
+.key p {
+    user-select: none;
+}
+
+.key:hover {
+    background-color: #999;
+}
+
+.key:active {
+    background-color: #555;
 }
 
 .digit-0 {
@@ -75,8 +135,4 @@ body {
     align-items: center;
     grid-column-start: 1;
     grid-column-end: 3;
-}
-
-.equals {
-    
 }

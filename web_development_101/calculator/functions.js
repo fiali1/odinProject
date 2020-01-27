@@ -2,7 +2,25 @@ function createDisplay(mainContainer) {
     let display = document.createElement('div');
     display.classList.add('display');
     display.textContent = 'Display';
+
     mainContainer.appendChild(display);
+}
+
+function createButtons(mainContainer) {
+    let buttonsContainer = document.createElement('div');
+    buttonsContainer.classList.add('buttons');
+
+    let power = document.createElement('button');
+    power.textContent = 'Power';
+    power.id = 'power';
+
+    let clear = document.createElement('button');
+    clear.textContent = 'Clear';
+    clear.id = 'clear';
+
+    buttonsContainer.appendChild(power);
+    buttonsContainer.appendChild(clear);
+    mainContainer.appendChild(buttonsContainer);
 }
 
 function createDigits(keysContainer) {
@@ -79,7 +97,7 @@ function createOperations(keysContainer) {
 
 function createKeys(mainContainer) {
     let keysContainer = document.createElement('div');
-    keysContainer.classList.add('keyContainer');
+    keysContainer.classList.add('keysContainer');
 
     createDigits(keysContainer);
     createOperations(keysContainer);
@@ -91,6 +109,7 @@ function generateCalculator() {
     let mainContainer = document.querySelector('#calculatorContainer');
     
     createDisplay(mainContainer);
+    createButtons(mainContainer);
     createKeys(mainContainer);
 };
 

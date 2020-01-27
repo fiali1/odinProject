@@ -2,7 +2,15 @@
 function createDisplay(mainContainer) {
     let display = document.createElement('div');
     display.classList.add('display');
-    display.textContent = 'Display';
+
+    let infoSection = document.createElement('p');
+    infoSection.classList.add('info');
+
+    let resultSection = document.createElement('p');
+    resultSection.classList.add('result');
+
+    display.appendChild(infoSection);
+    display.appendChild(resultSection);
 
     mainContainer.appendChild(display);
 }
@@ -27,7 +35,7 @@ function createButtons(mainContainer) {
 }
 
 
-//Numbered Keys and '='
+//Numbered Keys, '.' and '='
 function createDigits(keysContainer) {
     let digitsContainer = document.createElement('div');
     digitsContainer.classList.add('digits');
@@ -35,7 +43,7 @@ function createDigits(keysContainer) {
     for(i = 1; i <= 9; i++) {
         let key = document.createElement('div');
         key.classList.add('key');
-        key.classList.add(`digit-${i}`);
+        key.classList.add('digit');
         
         let digit = document.createElement('p'); 
         digit.textContent = i;
@@ -44,25 +52,41 @@ function createDigits(keysContainer) {
         digitsContainer.appendChild(key);
     }
 
+    
+    //Creates '.' key
     let key = document.createElement('div');
     key.classList.add('key');
-    key.classList.add(`digit-0`);
+    key.classList.add(`dot`);
 
     let digit = document.createElement('p'); 
+    digit.textContent = '.';
+    key.appendChild(digit);
+
+    digitsContainer.appendChild(key);
+
+
+    //Creates '0' key
+    key = document.createElement('div');
+    key.classList.add('key');
+    key.classList.add('digit');
+
+    digit = document.createElement('p'); 
     digit.textContent = 0;
     key.appendChild(digit);
 
     digitsContainer.appendChild(key);
 
-    let keyEquals = document.createElement('div');
-    keyEquals.classList.add('key');
-    keyEquals.classList.add(`equals`);
 
-    let symbol = document.createElement('p'); 
-    symbol.textContent = '=';
-    keyEquals.appendChild(symbol);
+    //Creates '=' key
+    key = document.createElement('div');
+    key.classList.add('key');
+    key.classList.add(`equals`);
 
-    digitsContainer.appendChild(keyEquals);
+    digit = document.createElement('p'); 
+    digit.textContent = '=';
+    key.appendChild(digit);
+
+    digitsContainer.appendChild(key);
     keysContainer.appendChild(digitsContainer);
 }
 
@@ -121,4 +145,72 @@ function generateCalculator() {
     createKeys(mainContainer);
 };
 
+
+function displayInfo(e) {
+    const display = document.querySelector('.display');
+    let info = document.querySelector('.info');
+    
+    if(display.getAttribute('unlocked') == null)
+        return;
+
+    content = e.target.childNodes[0].textContent;
+
+    info.textContent += content;
+}
+
+function displayResult(e) {
+
+}
+
+
+function keyEvent() {
+    const keys = document.querySelectorAll('.key');
+
+    keys.forEach(key => {
+        key.addEventListener('click', displayInfo);
+    });
+}
+
+
+//Event Listeners
+function toggleClear() {
+    const info = document.querySelector('.info');
+    const result = document.querySelector('.result')
+    info.textContent = '';
+    result.textContent = '';
+}
+
+function clearEvent() {
+    const clearBtn = document.querySelector('#clear');
+
+    clear.addEventListener('click', toggleClear);
+}
+
+function togglePower() {
+    const display = document.querySelector('.display');
+
+    if(display.getAttribute('unlocked') != null) {
+        toggleClear();
+    }
+
+    display.toggleAttribute('unlocked');
+    display.classList.toggle('on');
+}
+
+function powerEvent() {
+    const powerBtn = document.querySelector('#power');
+    
+    powerBtn.addEventListener('click', togglePower);
+}
+
+function setEvents() {    
+    keyEvent();
+    powerEvent();
+    clearEvent();
+}
+
+
+
+//Calling functions
 generateCalculator();
+setEvents();

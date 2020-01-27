@@ -1,3 +1,4 @@
+//Operations display
 function createDisplay(mainContainer) {
     let display = document.createElement('div');
     display.classList.add('display');
@@ -6,6 +7,8 @@ function createDisplay(mainContainer) {
     mainContainer.appendChild(display);
 }
 
+
+//Power and Clear
 function createButtons(mainContainer) {
     let buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('buttons');
@@ -23,6 +26,8 @@ function createButtons(mainContainer) {
     mainContainer.appendChild(buttonsContainer);
 }
 
+
+//Numbered Keys and '='
 function createDigits(keysContainer) {
     let digitsContainer = document.createElement('div');
     digitsContainer.classList.add('digits');
@@ -61,6 +66,7 @@ function createDigits(keysContainer) {
     keysContainer.appendChild(digitsContainer);
 }
 
+//Operation keys
 function createOperations(keysContainer) {
     let oprContainer = document.createElement('div');
     oprContainer.classList.add('operations');
@@ -95,6 +101,7 @@ function createOperations(keysContainer) {
     keysContainer.appendChild(oprContainer);
 }
 
+//Creates all keys
 function createKeys(mainContainer) {
     let keysContainer = document.createElement('div');
     keysContainer.classList.add('keysContainer');
@@ -105,6 +112,7 @@ function createKeys(mainContainer) {
     mainContainer.appendChild(keysContainer);
 }
 
+//Main function
 function generateCalculator() {
     let mainContainer = document.querySelector('#calculatorContainer');
     

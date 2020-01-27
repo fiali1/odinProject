@@ -10,6 +10,7 @@ body {
 }
 .buttons button{
     display: inline-block;
+    margin: 0px 5px;
     color: #ffffff;
     font-weight: bold;
     background: none;
@@ -25,8 +26,8 @@ body {
 }
 
 .container {
-    width: 730px;
-    height: 730px;
+    width: 700px;
+    height: 700px;
     margin: auto;
     margin-top: 20px;
     display: grid;

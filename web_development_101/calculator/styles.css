@@ -142,6 +142,32 @@ body {
     background-color: #555;
 }
 
+.operator {
+    background-color: #645050;
+    border: 2px solid #979494;
+}
+
+.operator:hover {
+    background-color: #816666;
+}
+
+.operator:active {
+    background-color: #4e3e3e;
+}
+
+.equals {
+    background-color: #b9734a;
+    border: 2px solid #979494;
+}
+
+.equals:hover {
+    background-color: #ee945f;
+}
+
+.equals:active {
+    background-color: #a56641;
+}
+
 .on {
     background-color: #abdbd3;
 }

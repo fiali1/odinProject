@@ -118,6 +118,8 @@ function createOperations(keysContainer) {
             opr.textContent = '/';
         }
 
+        key.classList.add('operator');
+
         key.appendChild(opr);
         oprContainer.appendChild(key);
     }

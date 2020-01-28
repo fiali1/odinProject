@@ -115,6 +115,7 @@ function createOperations(keysContainer) {
         }
         else if(i == 1) {
             key.setAttribute('opr', 'subtract');
+            key.id = 'subt';
             opr.textContent = '-';
         }
         else if(i == 2) {
@@ -161,6 +162,12 @@ function generateCalculator() {
 
 //Checks number of dots inside string
 
+function oprError() {
+    clear();
+    const ongoing = document.querySelector('.ongoing');
+    ongoing.textContent = 'Error';
+}
+
 function add() {
     let num = value1 + value2;
     return Math.round(num * 100) / 100;
@@ -199,7 +206,7 @@ function operations(opr) {
 function chkDots(value, ongoing) {
     const dots = value.match(/\./g);
     if(dots && dots.length > 1) {
-        ongoing.textContent = 'Error';
+        oprError(ongoing);
         return true;
     }
 }
@@ -219,13 +226,18 @@ function setResult() {
         return;
     
     value2 = Number(secondValue);
-
-    console.log(value1, value2);
-
+    
     let opr = storage.getAttribute('opr');
+    
+    if(opr == 4 && value2 == 0) {
+        oprError();
+        return;
+    }
+    
     let result = operations(opr);
-    console.log(result);
+    
     clear();
+    
     ongoing.textContent = result;
 }
 
@@ -247,34 +259,31 @@ function operationControl(e) {
     let storedText = firstValue;
     
     const opr = oprKey.getAttribute('opr');
-    console.log(opr);
 
-    switch(opr) {
-        case 'add':
-            index = 1;
-            storedText += ' + ';
-            break;
-        case 'subtract':
-            index = 2;
-            storedText += ' - ';
-            break;
-        case 'multiply':
-            index = 3;
-            storedText += ' * ';
-            break;
-        case 'divide':
+    if(opr == 'add') {
+        index = 1;
+        storedText += ' + ';
+    }
+    else if (opr == 'subtract') {
+        index = 2;
+        storedText += ' - ';
+    }
+    else if (opr == 'multiply') {
+        index = 3;
+        storedText += ' * ';
+    }
+    else if(opr == 'divide') {
             index = 4;
             storedText += ' / ';
-            break;
-        default:
-            break;
     }
+    else
+        return;
 
     storage.textContent = storedText;
     storage.setAttribute('opr', index);
 }
 
-function displaystorage(e) {
+function displayStorage(e) {
     const display = document.querySelector('.display');
     let ongoing = document.querySelector('.ongoing');
     
@@ -291,7 +300,7 @@ function keyEvent() {
     const digitKeys = document.querySelectorAll('.digit');
 
     digitKeys.forEach(key => {
-        key.addEventListener('click', displaystorage);
+        key.addEventListener('click', displayStorage);
     });
 
     const oprKeys = document.querySelectorAll('.operator');
@@ -359,8 +368,6 @@ function setEvents() {
     clearEvent();
     delEvent();
 }
-
-
 
 //Calling functions
 generateCalculator();

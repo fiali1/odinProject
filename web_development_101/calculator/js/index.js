@@ -156,6 +156,7 @@ function generateCalculator() {
 
 function oprError() {
     clear();
+    const display = document.querySelector('.display');
     const ongoing = document.querySelector('.ongoing');
     ongoing.textContent = 'Error';
 }
@@ -287,6 +288,9 @@ function displayStorage(e) {
     const display = document.querySelector('.display');
     let ongoing = document.querySelector('.ongoing');
     
+    if(ongoing.textContent == 'Error')
+        return;
+
     if(display.getAttribute('unlocked') == null)
         return;
 

@@ -117,6 +117,7 @@ body {
 .keysContainer {
     display: flex;
     flex-direction: row;
+    height: 400px;
     margin: 0 auto;
     margin-top: 10px;
     border-radius: 3px;

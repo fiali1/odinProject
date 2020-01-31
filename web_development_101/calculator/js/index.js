@@ -48,14 +48,13 @@ function createDigits(keysContainer) {
     let digitsContainer = document.createElement('div');
     digitsContainer.classList.add('digits');
 
+    let datakey = 49;
     for(i = 1; i <= 9; i++) {
         let key = document.createElement('div');
         key.classList.add('key');
         key.classList.add('digit');
-        
-        let digit = document.createElement('p'); 
-        digit.textContent = i;
-        key.appendChild(digit);
+        key.setAttribute('data-key', datakey++);
+        key.textContent = i;
 
         digitsContainer.appendChild(key);
     }
@@ -65,10 +64,8 @@ function createDigits(keysContainer) {
     let key = document.createElement('div');
     key.classList.add('key');
     key.classList.add(`digit`);
-
-    let digit = document.createElement('p'); 
-    digit.textContent = '.';
-    key.appendChild(digit);
+    key.textContent = '.';
+    key.setAttribute('data-key', 46);
 
     digitsContainer.appendChild(key);
 
@@ -77,10 +74,8 @@ function createDigits(keysContainer) {
     key = document.createElement('div');
     key.classList.add('key');
     key.classList.add('digit');
-
-    digit = document.createElement('p'); 
-    digit.textContent = 0;
-    key.appendChild(digit);
+    key.textContent = 0;
+    key.setAttribute('data-key', 48);
 
     digitsContainer.appendChild(key);
 
@@ -89,12 +84,11 @@ function createDigits(keysContainer) {
     key = document.createElement('div');
     key.classList.add('key');
     key.classList.add(`equals`);
-
-    digit = document.createElement('p'); 
-    digit.textContent = '=';
-    key.appendChild(digit);
-
+    key.textContent = '=';
+    key.setAttribute('data-key', 61);
+    
     digitsContainer.appendChild(key);
+
     keysContainer.appendChild(digitsContainer);
 }
 
@@ -105,31 +99,29 @@ function createOperations(keysContainer) {
 
     for(i = 0; i < 4; i++) {
         let key = document.createElement('div');
-        let opr = document.createElement('p'); 
 
         key.classList.add('key');
 
         if(i == 0) {
             key.setAttribute('opr', 'add');
-            opr.textContent = '+';
+            key.textContent = '+';
         }
         else if(i == 1) {
             key.setAttribute('opr', 'subtract');
             key.id = 'subt';
-            opr.textContent = '-';
+            key.textContent = '-';
         }
         else if(i == 2) {
             key.setAttribute('opr', 'multiply');
-            opr.textContent = '*';
+            key.textContent = '*';
         }
         else if(i == 3) {
             key.setAttribute('opr', 'divide');
-            opr.textContent = '/';
+            key.textContent = '/';
         }
 
         key.classList.add('operator');
 
-        key.appendChild(opr);
         oprContainer.appendChild(key);
     }
 
@@ -246,6 +238,11 @@ function operationControl(e) {
     const ongoing = document.querySelector('.ongoing');
     const storage = document.querySelector('.storage');
 
+    if(ongoing.textContent == '' && e.target.getAttribute('opr') == 'subtract') {
+        displayStorage(e);
+        return;
+    }
+
     let firstValue = ongoing.textContent;
     if(!firstValue)
         return;
@@ -253,6 +250,9 @@ function operationControl(e) {
     if(chkDots(firstValue, ongoing))
         return;
     
+    if(firstValue.charAt(0) == '.')
+        firstValue = 0 + firstValue;
+
     ongoing.textContent = '';
 
     value1 = Number(firstValue);
@@ -295,22 +295,21 @@ function displayStorage(e) {
     ongoing.textContent += content;
 }
 
-
 function keyEvent() {
     const digitKeys = document.querySelectorAll('.digit');
 
     digitKeys.forEach(key => {
-        key.addEventListener('click', displayStorage);
+        key.addEventListener('mousedown', displayStorage);
     });
 
     const oprKeys = document.querySelectorAll('.operator');
 
     oprKeys.forEach(opr => {
-        opr.addEventListener('click', operationControl);
+        opr.addEventListener('mousedown', operationControl);
     })
 
     const equals = document.querySelector('.equals');
-    equals.addEventListener('click', setResult);
+    equals.addEventListener('mousedown', setResult);
 
 }
 
@@ -326,12 +325,12 @@ function del() {
 function delEvent() {
     const delBtn = document.querySelector('#del');
 
-    delBtn.addEventListener('click', del);
+    delBtn.addEventListener('mousedown', del);
 }
 
 function clear() {
     const storage = document.querySelector('.storage');
-    const ongoing = document.querySelector('.ongoing')
+    const ongoing = document.querySelector('.ongoing');
     storage.textContent = '';
     ongoing.textContent = '';
     if(storage.getAttribute('opr'))
@@ -342,7 +341,7 @@ function clear() {
 function clearEvent() {
     const clearBtn = document.querySelector('#clear');
 
-    clearBtn.addEventListener('click', clear);
+    clearBtn.addEventListener('mousedown', clear);
 }
 
 function togglePower() {
@@ -359,7 +358,7 @@ function togglePower() {
 function powerEvent() {
     const powerBtn = document.querySelector('#power');
     
-    powerBtn.addEventListener('click', togglePower);
+    powerBtn.addEventListener('mousedown', togglePower);
 }
 
 function setEvents() {    

@@ -243,6 +243,9 @@ function operationControl(e) {
         return;
     }
 
+    if(storage.textContent != '' && ongoing.textContent != '' && value1 != '')
+        setResult();
+
     let firstValue = ongoing.textContent;
     if(!firstValue)
         return;

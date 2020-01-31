@@ -156,7 +156,6 @@ function generateCalculator() {
 
 function oprError() {
     clear();
-    const display = document.querySelector('.display');
     const ongoing = document.querySelector('.ongoing');
     ongoing.textContent = 'Error';
 }

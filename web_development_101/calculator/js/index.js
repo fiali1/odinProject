@@ -238,6 +238,9 @@ function operationControl(e) {
     const ongoing = document.querySelector('.ongoing');
     const storage = document.querySelector('.storage');
 
+    if(ongoing.textContent == 'Error')
+        return;
+
     if(ongoing.textContent == '' && e.target.getAttribute('opr') == 'subtract') {
         displayStorage(e);
         return;

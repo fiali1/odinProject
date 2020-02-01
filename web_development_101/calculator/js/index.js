@@ -219,6 +219,9 @@ function setResult() {
     }
     
     let result = operations(opr);
+
+    if(result.toString().length > 14)
+        result = result.toExponential(2);
     
     clear();
     

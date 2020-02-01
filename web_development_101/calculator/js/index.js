@@ -48,12 +48,10 @@ function createDigits(keysContainer) {
     let digitsContainer = document.createElement('div');
     digitsContainer.classList.add('digits');
 
-    let datakey = 49;
     for(i = 1; i <= 9; i++) {
         let key = document.createElement('div');
         key.classList.add('key');
         key.classList.add('digit');
-        key.setAttribute('data-key', datakey++);
         key.textContent = i;
 
         digitsContainer.appendChild(key);
@@ -65,7 +63,6 @@ function createDigits(keysContainer) {
     key.classList.add('key');
     key.classList.add(`digit`);
     key.textContent = '.';
-    key.setAttribute('data-key', 46);
 
     digitsContainer.appendChild(key);
 
@@ -75,7 +72,6 @@ function createDigits(keysContainer) {
     key.classList.add('key');
     key.classList.add('digit');
     key.textContent = 0;
-    key.setAttribute('data-key', 48);
 
     digitsContainer.appendChild(key);
 
@@ -85,7 +81,6 @@ function createDigits(keysContainer) {
     key.classList.add('key');
     key.classList.add(`equals`);
     key.textContent = '=';
-    key.setAttribute('data-key', 61);
     
     digitsContainer.appendChild(key);
 
@@ -150,10 +145,6 @@ function generateCalculator() {
 
 
 //Event Listeners and operations
-
-
-//Checks number of dots inside string
-
 function oprError() {
     clear();
     const ongoing = document.querySelector('.ongoing');
@@ -195,6 +186,7 @@ function operations(opr) {
     return result;
 }
 
+//Checks number of dots inside string
 function chkDots(value, ongoing) {
     const dots = value.match(/\./g);
     if(dots && dots.length > 1) {
@@ -279,8 +271,8 @@ function operationControl(e) {
         storedText += ' * ';
     }
     else if(opr == 'divide') {
-            index = 4;
-            storedText += ' / ';
+        index = 4;
+        storedText += ' / ';
     }
     else
         return;

@@ -196,6 +196,7 @@ function chkDots(value, ongoing) {
 }
 
 function setResult() {
+    const display = document.querySelector('.display');
     const ongoing = document.querySelector('.ongoing');
     const storage = document.querySelector('.storage');
 
@@ -225,19 +226,28 @@ function setResult() {
     
     clear();
     
+    display.toggleAttribute('result');
+
     ongoing.textContent = result;
 }
 
 function operationControl(e) {
     const oprKey = e.target;
+    const display = document.querySelector('.display');
     const ongoing = document.querySelector('.ongoing');
     const storage = document.querySelector('.storage');
-
+    
+    //Requests a 'clear' press after an error
     if(ongoing.textContent == 'Error')
         return;
+    
+    //Allows the use of a previous result on a new operation
+    if(display.getAttribute('result') != null)
+        display.toggleAttribute('result');
 
+    //Allows the use of '-' to represent negative numbers
     if(ongoing.textContent == '' && e.target.getAttribute('opr') == 'subtract') {
-        displayStorage(e);
+        displayOngoing(e);
         return;
     }
 
@@ -284,15 +294,22 @@ function operationControl(e) {
     storage.setAttribute('opr', index);
 }
 
-function displayStorage(e) {
+function displayOngoing(e) {
     const display = document.querySelector('.display');
     let ongoing = document.querySelector('.ongoing');
     
+    //Errors require a 'clear' press to continue using the calculator
     if(ongoing.textContent == 'Error')
         return;
 
     if(display.getAttribute('unlocked') == null)
         return;
+
+    //Start anew after displaying a result
+    if(display.getAttribute('result') != null) {
+        display.toggleAttribute('result');
+        clear();
+    }
 
     content = e.target.childNodes[0].textContent;
 
@@ -303,7 +320,7 @@ function keyEvent() {
     const digitKeys = document.querySelectorAll('.digit');
 
     digitKeys.forEach(key => {
-        key.addEventListener('mousedown', displayStorage);
+        key.addEventListener('mousedown', displayOngoing);
     });
 
     const oprKeys = document.querySelectorAll('.operator');

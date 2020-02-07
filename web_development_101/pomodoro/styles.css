@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+
+* {
+    outline: none;
+    user-select: none;
+}
+
+body {
+    background-color: #FEFFE5;
+    color: #383838;
+    font-family: 'Staatliches', cursive;
+
+}
+
+.container {
+    padding: 150px 0;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.timestamps {
+    position: absolute;
+    top: 10%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.timestamps li, .functions li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+p {
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+.timer {
+    position: relative;
+
+    width: 300px;
+    min-width: 300px;
+    height: 300px;
+    padding: 20px;
+    margin: auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    border: 10px solid #383838;
+    border-radius: 50%;
+    
+    background-color: #FEFFE5;
+}
+
+#test {
+    position: absolute;
+    top: 30%;
+
+    margin: 0px auto;
+    font-size: 112px;
+    font-weight: lighter;
+}
+
+.functions {
+    position: absolute;
+    top: 70%;
+
+    margin: 0 auto;
+    padding: 0;
+}
+
+.functions li {
+    width: 50px;
+}
+
+#play_pause {
+    font-size: 42px;
+}
+
+#stop {
+    font-size: 32px;
+}

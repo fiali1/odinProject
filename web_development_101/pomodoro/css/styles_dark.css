@@ -1,0 +1,17 @@
+body {
+    background-color: #201F1F;
+    
+    color: #FF6B00;
+    text-shadow: 2px 2px #FF0000;
+}
+
+.info {
+    text-shadow: 1px 1px #FF0000;
+}
+
+.timer-container {
+    border: 10px solid #FF6B00;
+
+    background-color: #201F1F;
+    box-shadow: 2px 2px #FF0000;
+}

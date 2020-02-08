@@ -9,43 +9,81 @@ body {
     background-color: #FEFFE5;
     color: #383838;
     font-family: 'Staatliches', cursive;
+}
 
+.info {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+}
+
+.info h2 {
+    margin: 0;
+    margin-bottom: 5px;
+
+    font-size: 36px;
+    font-weight: normal;
+}
+
+.info p {
+    margin: 0;
+}
+
+.info ul {
+    padding: 0;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.theme {    
+    cursor: pointer;
+
+    margin-right: 5px;
+
+    list-style: none;
+
+    font-size: 24px;
 }
 
 .container {
-    padding: 150px 0;
-    max-width: 1200px;
-    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    max-width: 1200px;
+    margin: auto;
+    
+    padding: 150px 0;
 }
 
-.timestamps {
+.timestamps-group {
     position: absolute;
     top: 10%;
+    
     margin: 0 auto;
     padding: 0;
 }
 
-.timestamps li, .functions li {
-    list-style: none;
+.timestamps-group li, .controllers-group li {
     display: inline-block;
+    
     margin: 0 10px;
+    
+    list-style: none;
 }
 
-h1 {
-    font-size: 30px;
-    margin: 10px auto;
+.timestamp {
+    cursor: pointer;
 }
 
 p {
-    font-size: 30px;
     margin: 10px auto;
+    
+    font-size: 30px;
 }
 
-.timer {
+.timer-container {
     position: relative;
 
     width: 300px;
@@ -66,7 +104,7 @@ p {
     background-color: #FEFFE5;
 }
 
-#test {
+#timer {
     position: absolute;
     top: 30%;
 
@@ -75,7 +113,7 @@ p {
     font-weight: lighter;
 }
 
-.functions {
+.controllers-group {
     position: absolute;
     top: 70%;
 
@@ -83,14 +121,20 @@ p {
     padding: 0;
 }
 
-.functions li {
+.controllers-group li {
     width: 50px;
 }
 
-#play_pause {
-    font-size: 42px;
+.controller {
+    cursor: pointer;
+}
+
+#play-pause {
+    width: 52px;
+    height: 52px;
 }
 
 #stop {
-    font-size: 32px;
+    width: 52px;
+    height: 52px;
 }

@@ -1,12 +1,9 @@
 let theme = 'sepia';
 
-function changeTheme(e) {
-    const display = document.querySelector('#timer');
+function changeTheme(e, display) {
     const stylesheet = document.querySelector('#theme');
     const playPause = document.querySelector('#play-pause');
     const stop = document.querySelector('#stop');
-
-    console.log(e.target);
 
     if (e.target.id == 'sepia') 
         theme = 'sepia';
@@ -25,7 +22,7 @@ function changeTheme(e) {
     stop.setAttribute('src', `./assets/icons/stop_${theme}.png`);    
 }
 
-function leadingZero(value) {
+function leadingZero(value, play) {
     value = value < 10 ? '0' + value : value;
     return value;
 }
@@ -90,8 +87,7 @@ function parseValue(value) {
     return processed;
 }
 
-function setTimer(e) {
-    const display = document.querySelector('#timer');
+function setTimer(e, display) {
     display.removeAttribute('running');
 
     const play = document.querySelector('#play-pause');
@@ -115,17 +111,17 @@ function setTimer(e) {
     }
 }
 
-function timestampEvents() {
+function timestampEvents(display) {
     const timestamps = document.querySelectorAll('.timestamp');
 
     timestamps.forEach(timestamp => {
-        timestamp.addEventListener('click', setTimer);
+        timestamp.addEventListener('click', (e) => {
+            setTimer(e, display);
+        });
     });
 }
 
-function configCountdown(e) {
-    const display = document.querySelector('#timer');
-
+function configCountdown(e, display) {
     if (e.target.id == 'play-pause') {
         display.toggleAttribute('running');
 
@@ -149,26 +145,33 @@ function configCountdown(e) {
 
 }
 
-function controllerEvents() {
+function controllerEvents(display) {
     const controllers = document.querySelectorAll('.controller');
 
     controllers.forEach(controller => {
-        controller.addEventListener('click', configCountdown);
+        controller.addEventListener('click', (e) => {
+            configCountdown(e, display);
+        });
     });
 }
 
-function themeEvents() {
+function themeEvents(display) {
     const themes = document.querySelectorAll('.theme');
 
     themes.forEach(theme => {
-        theme.addEventListener('click', changeTheme);
+        theme.addEventListener('click', (e) => {
+            changeTheme(e, display);
+        });
     });
 }
 
 function setEvents() {
-    timestampEvents();
-    controllerEvents();
-    themeEvents();
+    const display = document.querySelector('#timer');
+    const play = document.querySelector('#play-pause');
+
+    timestampEvents(display);
+    controllerEvents(display);
+    themeEvents(display);
 }
 
 setEvents();

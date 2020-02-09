@@ -55,6 +55,8 @@ function startCountdown(duration, display) {
     if (display.getAttribute('initialValue') == null)
         display.setAttribute('initialValue', duration); 
 
+    const play = document.querySelector('#play-pause');
+
     let minutes, seconds = '';
 
     let timer = setInterval(function() {
@@ -68,7 +70,10 @@ function startCountdown(duration, display) {
             
             display.textContent = minutes + ':' + seconds;
             
-            duration--;
+            if (--duration < 0) {
+                clearInterval(timer);
+                play.setAttribute('src', `./assets/icons/play_${theme}.png`);
+            }
         }
         else
             clearInterval(timer);

@@ -146,3 +146,26 @@ summary {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-decoration: none;
 }
+
+@media (max-width: 800px) {
+    .info {
+        position: absolute;
+        top: 10;
+        left: 0;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+    }   
+
+    .info ul {
+        padding-left: 0;
+    }
+
+    .theme {
+        display: inline-block;
+    }
+
+    .container {
+        padding: 175px 0;
+    }
+}

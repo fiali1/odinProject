@@ -15,3 +15,8 @@ body {
     background-color: #201F1F;
     box-shadow: 2px 2px #FF0000;
 }
+
+summary {
+    color: #FF6B00;
+    text-shadow: 1px 1px #FF0000;
+}

@@ -138,3 +138,11 @@ p {
     width: 52px;
     height: 52px;
 }
+
+summary {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration: none;
+}

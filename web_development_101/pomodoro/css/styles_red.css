@@ -9,3 +9,7 @@ body {
     
     background-color: #FEFFE5;
 }
+
+summary {
+    color: #000;
+}

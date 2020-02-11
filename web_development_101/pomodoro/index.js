@@ -60,10 +60,10 @@ function startCountdown(duration, display, play) {
         if(display.getAttribute('running') != null) {
             minutes = parseInt(duration / 60, 10);
             seconds = parseInt(duration % 60, 10);
-            
+
             minutes = leadingZero(minutes);
             seconds = leadingZero(seconds);
-            
+
             display.textContent = minutes + ':' + seconds;
             
             if (--duration < 0) {
@@ -124,7 +124,6 @@ function configCountdown(e, display, play) {
 
         minutes = Number(string.slice(0, 2));
         seconds = Number(string.slice(3, 5));
-
         duration = minutes * 60 + seconds;
 
         startCountdown(duration, display, play);
@@ -137,9 +136,8 @@ function configCountdown(e, display, play) {
 function setEvents() {
     const display = document.querySelector('#timer');
     display.setAttribute('theme', 'sepia');
-
-    const play = document.querySelector('#play-pause');
     
+    const play = document.querySelector('#play-pause');
     const themes = document.querySelectorAll('.theme');
     const timestamps = document.querySelectorAll('.timestamp');
     const controllers = document.querySelectorAll('.controller');

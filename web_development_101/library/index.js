@@ -1,23 +1,16 @@
-let myLibrary = [];
+let array = JSON.parse(localStorage.getItem('storage'));
+let myLibrary = array;
 
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-
-    this.toggle = function() {
-        this.read = !this.read;
-    }
-
-    this.info = function() {
-        string = this.read ? 'Already read' : 'Not read yet';
-        return string;
-    }
 }
 
 function render(template, node) {
     node.innerHTML = template;
+    localStorage.setItem('storage', JSON.stringify(myLibrary));
 }
 
 function sortLibrary(parameter) {
@@ -34,7 +27,6 @@ function sortLibrary(parameter) {
 function setupLibrary() {
     const bookContainer = document.querySelector('.book-container');
     let parameter = bookContainer.getAttribute('parameter');
-
     let template = '';
     let index = 0;
 
@@ -52,21 +44,16 @@ function setupLibrary() {
     sortLibrary(parameter);
     
     myLibrary.forEach(book => {
-        let chk = book.read ? true : false;
-        let attribute;
-
-        if(chk)
-            attribute = 'read';
-        else
-            atribute = '';
+        let attribute = book.read ? 'read' : '';
+        let alreadyRead = book.read ? 'Already read' : 'Not read yet';
 
         template += 
             `<div class='book ${attribute}'>
                 <h2>${book.title}</h2>
                 <h3>${book.author}</h3>
                 <p>${book.pages} pages</p>
-                <p>${book.info()}</p>
-                <button id='tg-${index}' class='tg-btn' book='${book.title}' onclick='toggleRead(this.id)'>Read Status</button>
+                <p>${alreadyRead}</p>
+                <button id='tg-${index}' class='tg-btn' book="${book.title}" onclick='toggleRead(this.id)'>Read Status</button>
                 <button id='rm-${index++}' class='rmv-btn' book='${book.title}' onclick='removeBookFromLibrary(this.id)'>Remove</button>
             </div>`;
     });
@@ -77,8 +64,9 @@ function setupLibrary() {
 function toggleRead(id) {
     const book = document.querySelector(`#${id}`);
     const title = book.getAttribute('book');
-    const index = myLibrary.findIndex(book => book.title === title)
-    myLibrary[index].toggle();
+    const index = myLibrary.findIndex(book => book.title === title);
+
+    myLibrary[index].read = !myLibrary[index].read;
 
     setupLibrary();
 }
@@ -108,13 +96,13 @@ function formSetup(opr) {
 
     if(opr == 1) {
         template = 
-            `<div class='form-group'>
+            `<form class='form-group' autocomplete='off'>
                 <input id='title' type='text' placeholder='Title'></input>
                 <input id='author' type='text' placeholder='Author'></input>
                 <input id='pages' type='text' placeholder='Pages'></input>
                 <span>Already read?</span>
                 <input type='checkbox'></input>
-            </div>
+            </form>
             <button class='submit-btn' onclick='submitInfo()'>Submit</button>
             <button class='cancel-btn' onclick='formSetup(2)'>Cancel</button>`;
     }
@@ -134,9 +122,7 @@ function addBookToLibrary(book) {
 function removeBookFromLibrary(id) {
     const btn = document.querySelector(`#${id}`);    
     const title = btn.getAttribute('book');
-
     const index = myLibrary.findIndex(book => book.title === title);
-
     myLibrary.splice(index, 1);
     
     setupLibrary();
@@ -145,9 +131,5 @@ function removeBookFromLibrary(id) {
 const nineteenEightyFour = new Book('1984', 'George Orwell', 389, true);
 const aGameOfThrones = new Book('A Game of Thrones', 'George R.R. Martin', 987, true);
 const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 786, false);
-
-myLibrary.push(nineteenEightyFour);
-myLibrary.push(aGameOfThrones);
-myLibrary.push(theHobbit);
 
 setupLibrary();

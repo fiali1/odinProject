@@ -28,7 +28,6 @@ body {
 .content {
     display: flex;
     flex-direction: row;
-    flex: 1;
 }
 
 button {
@@ -55,6 +54,7 @@ button:active {
 
 .new-container {
     width: 20%;
+    margin: 0;
     margin-right: 15px;
 }
 
@@ -79,20 +79,25 @@ button:active {
 }
 
 .form-group {
-    width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 .form-group input {    
+    margin: 0;
     margin-bottom: 5px;
-    padding: 5px 5px;
-    
+    max-width: 95%;
+    padding: 5px;
     border: 2px solid #727272;
     border-radius: 3px;
 }
 
+.form-group span {
+    margin-right: 5px;
+}
+
 .submit-btn {
     margin: 10px 0;
-    margin-right: 10px;
 }
 
 .cancel-btn {
@@ -100,7 +105,7 @@ button:active {
 }
 
 .book-container {
-    width: 80%;
+    width: 78%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -112,14 +117,20 @@ button:active {
     border: 2px solid #77bec0;
     border-radius: 3px;   
     text-align: center;
+    height: 250px;
+
+    position: relative;
 }
 
 .book h2 {
     font-size: 27px;
+    font-size: 1.65vw;
+    margin: 0;
 }
 
 .book h3 {
     font-size: 22px;
+    margin: 8px 0;
 }
 
 .book p {
@@ -130,8 +141,17 @@ button:active {
     border: 2px solid #b0f0f0;
 }
 
-.book h2 {
-    margin: 0;
+.tg-btn, .rmv-btn {
+    position: absolute;
+    bottom: 7px;
+}
+
+.tg-btn {
+    left: 5px;
+}
+
+.rmv-btn {
+    right: 5px;
 }
 
 .empty-message {
@@ -144,4 +164,78 @@ button:active {
 .empty-message h3 {
     font-size: 30px;
     color: #fff;
+}
+
+@media(max-width: 730px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .new-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .form-group input {
+        width: 50%;
+        margin: 0;
+        margin-right: 10px;
+    }
+
+    .form-group span {
+        width: 35%;
+    }
+
+    .form-group input[type='checkbox'] {
+        margin-top: 5px;
+        width: 10%;
+    }
+
+    .book-container {
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .book {
+        height: 200px;
+    }
+}
+
+@media(max-width: 500px) {
+    .new-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-group {
+        display: block;
+        text-align: center;
+    }
+
+    .form-group input {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+
+    .form-group span {
+        padding-left: 20px;
+        width: 50%;
+    }
+
+    .form-group input[type='checkbox'] {
+        margin-top: 5px;
+        margin: 0;
+        width: 10%;
+    }
+
+    .book-container {
+        grid-template-columns: 1fr;
+    }
 }

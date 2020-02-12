@@ -14,6 +14,9 @@ body {
 }
 
 .header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
     border-bottom: 2px solid #fff;
     padding: 0;
     margin-bottom: 20px;
@@ -21,8 +24,63 @@ body {
 
 .header h2 {
     color: #ffffff;
-    font-size: 32px;
+    font-size: 30px;
     margin: 10px 0;
+}
+
+.dropdown-sort {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    display: inline-block;
+}
+
+.dropdown-sort span {
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+
+.dropdown-btn {
+    min-width: 90px;
+    padding:  0 4px;
+    color: #fff;
+    font-size: 18px;
+    background-color: #4cada7;
+}
+
+.dropdown-content {
+    position: absolute;
+    right: 5px;
+    width: 90px;
+    background-color: #4cada7;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.25s linear;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 5px;
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #b0f0f0;
+}
+
+.dropdown-btn:hover {
+    color: #000;
+}
+
+.dropdown-sort:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-btn {
+    background-color: #4cada7;
 }
 
 .content {
@@ -117,14 +175,13 @@ button:active {
     border: 2px solid #77bec0;
     border-radius: 3px;   
     text-align: center;
-    height: 250px;
+    height: 225px;
 
     position: relative;
 }
 
 .book h2 {
-    font-size: 27px;
-    font-size: 1.65vw;
+    font-size: 24px;
     margin: 0;
 }
 
@@ -135,6 +192,8 @@ button:active {
 
 .book p {
     font-size: 18px;
+    margin: 5px auto;
+    margin-bottom: 10px;
 }
 
 .read {
@@ -166,7 +225,7 @@ button:active {
     color: #fff;
 }
 
-@media(max-width: 730px) {
+@media(max-width: 780px) {
     .content {
         flex-direction: column;
     }
@@ -201,13 +260,9 @@ button:active {
         width: 100%;
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .book {
-        height: 200px;
-    }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 540px) {
     .new-container {
         width: 100%;
         text-align: center;
@@ -237,5 +292,9 @@ button:active {
 
     .book-container {
         grid-template-columns: 1fr;
+    }
+
+    .book {
+        height: 200px;
     }
 }

@@ -24,6 +24,16 @@ function sortLibrary(parameter) {
         myLibrary.sort((a, b) => a.read - b.read);
 }
 
+function setParameter(e) {
+    const parameterType = e.target.getAttribute('parameter');
+    const dropdownText = document.querySelector('.dropdown-btn');
+    const bookContainer = document.querySelector('.book-container');
+    bookContainer.setAttribute('parameter', parameterType);
+    dropdownText.textContent = parameterType.charAt(0).toUpperCase() + parameterType.slice(1); 
+    
+    setupLibrary();
+}
+
 function setupLibrary() {
     const bookContainer = document.querySelector('.book-container');
     let parameter = bookContainer.getAttribute('parameter');
@@ -39,10 +49,9 @@ function setupLibrary() {
         render(template, bookContainer);
         return;
     }
-
-    parameter = 'title';
-    sortLibrary(parameter);
     
+    sortLibrary(parameter);
+
     myLibrary.forEach(book => {
         let attribute = book.read ? 'read' : '';
         let alreadyRead = book.read ? 'Already read' : 'Not read yet';
@@ -128,8 +137,11 @@ function removeBookFromLibrary(id) {
     setupLibrary();
 }
 
-const nineteenEightyFour = new Book('1984', 'George Orwell', 389, true);
-const aGameOfThrones = new Book('A Game of Thrones', 'George R.R. Martin', 987, true);
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 786, false);
+function sortEvent() {
+    const parameters = document.querySelectorAll('.sort-link');
+
+    parameters.forEach(link => link.addEventListener('click', setParameter))
+}
 
 setupLibrary();
+sortEvent();

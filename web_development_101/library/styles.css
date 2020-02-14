@@ -10,6 +10,7 @@ body {
     max-width: 1000px;
     
     margin: 0 auto;
+    margin-bottom: 20px;
     padding: 0 10px;
 }
 
@@ -230,12 +231,15 @@ button:active {
     color: #fff;
 }
 
-summary {
+details {
+    display: block;
     position: absolute;
     bottom: 10px;
     left: 10px;
+}
+
+summary {
     color: #fff;
-    font-family: 'Goudy Bookletter 1911', serif;
     text-decoration: none;
 }
 
@@ -273,6 +277,10 @@ summary {
     .book-container {
         width: 100%;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    details {
+        position: static;
     }
 }
 

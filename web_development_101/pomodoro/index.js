@@ -54,6 +54,7 @@ function startCountdown(duration, display, play) {
     if (display.getAttribute('initialValue') == null)
         display.setAttribute('initialValue', duration); 
 
+    let theme = display.getAttribute('theme');
     let minutes, seconds = '';
 
     let timer = setInterval(function() {
@@ -67,8 +68,11 @@ function startCountdown(duration, display, play) {
             display.textContent = minutes + ':' + seconds;
             
             if (--duration < 0) {
-                clearInterval(timer);
+                const alarm = new Audio('./assets/audio/simple_ringtone.mp3');
+                alarm.play();
+                display.toggleAttribute('running');
                 play.setAttribute('src', `./assets/icons/play_${theme}.png`);
+                clearInterval(timer);
             }
         }
         else
@@ -120,12 +124,11 @@ function configCountdown(e, display, play) {
         else 
             e.target.setAttribute('src', `./assets/icons/play_${theme}.png`);
 
-        let string = display.textContent;
-
+        let string = display.textContent;        
         minutes = Number(string.slice(0, 2));
         seconds = Number(string.slice(3, 5));
         duration = minutes * 60 + seconds;
-
+        
         startCountdown(duration, display, play);
     }
     else if (e.target.id == 'stop') {

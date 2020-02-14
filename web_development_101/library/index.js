@@ -1,5 +1,5 @@
 let array = JSON.parse(localStorage.getItem('storage'));
-let myLibrary = array;
+let myLibrary = (!array) ? [] : array;
 
 function Book(title, author, pages, read) {
     this.title = title;

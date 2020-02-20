@@ -12,8 +12,7 @@ const menu = (function() {
     const container = document.querySelector('.container');
 
     const generateMenu = () => {
-        if(container.hasChildNodes)
-            container.firstChild.remove();
+        if (container.hasChildNodes) { container.firstChild.remove(); }
         
         const menu = document.createElement('div');
         const form = document.createElement('div');
@@ -45,20 +44,21 @@ const menu = (function() {
     }
 
     const clearMenu = () => {
-        if(container.hasChildNodes)
-            container.firstChild.remove();
+        if (container.hasChildNodes) { container.firstChild.remove(); }
+        displayController.generateDisplay();
+        gameBoard.generateBoard();
     }
 
     const generatePlayers = () => {
         p1Name = document.querySelector('#p1').value;
         p2Name = document.querySelector('#p2').value;
 
-        if(p1Name == '' || p2Name == '') {
+        if (p1Name == '' || p2Name == '') {
             p1Name = 'Player 1';
             p2Name = 'Player 2';
         }
 
-        else if(p1Name == p2Name) {
+        else if (p1Name == p2Name) {
             alert('Error: Two players can\'t have the same name!');
             return;
         }
@@ -67,8 +67,6 @@ const menu = (function() {
         player2 = playerFactory(p2Name);
         
         clearMenu();
-        displayController.generateDisplay();
-        gameBoard.generateBoard();
     }
 
     const getPlayers = () => {
@@ -113,7 +111,7 @@ const displayController = (function() {
         score.textContent = `${player1.getScore()} X ${player2.getScore()}`;        
         
         const turn = document.querySelector('.turn');
-        if(turn.getAttribute('lock') != null) { return; }
+        if (turn.getAttribute('lock') != null) { return; }
         turn.textContent = ((move % 2 == 0) ? `${player1.name}` : `${player2.name}`) + ' turn';
     }
 
@@ -129,7 +127,6 @@ const displayController = (function() {
     }
 
     const tie = () => {
-        console.log('TIE');
         const turn = document.querySelector('.turn');
         turn.textContent = 'It\'s a tie!';
         turn.toggleAttribute('lock');
@@ -137,7 +134,6 @@ const displayController = (function() {
     }
 
     const win = (player) => {
-        console.log('WON');
         player == 0 ? player1.addScore() : player2.addScore();
         const turn = document.querySelector('.turn');
         turn.textContent =  ((player == 0) ? `${player1.name}` : `${player2.name}`) + ' won this round!';
@@ -196,29 +192,24 @@ const gameBoard = (function() {
     const getSquares = (symbol) => {
         let positions = [];
         for(i = 0; i < array.length; i++) 
-            if(array[i] == symbol) { positions.push(i); }
+            if (array[i] == symbol) { positions.push(i); }
     
         return positions;
     }
 
     const findSubarray = (main, sub) => {
         let count = 0;
-        console.log('Main: ' + main, 'Sub: ' + sub, 'Count: ' + count);
         for(let i = 0; i < main.length; i++) {
-            for(let j = 0; j < sub.length; j++) {
-                console.log('Main: ' + main[i], 'Sub: ' + sub[j], 'Count: ' + count);
-                if(main[i] == sub[j]) {
-                    count++; 
-                }
-            }
-            if(count == 3) { return true; }
+            for(let j = 0; j < sub.length; j++) 
+                if (main[i] == sub[j]) { count++; }
+
+            if (count == 3) { return true; }
         }
         
         return false;
     }
 
     const checkBoard = () => {
-        let move = gameBoard.getMove();
         let xPlacement = getSquares('X');
         let oPlacement = getSquares('O');
         const winCondition = [
@@ -232,9 +223,8 @@ const gameBoard = (function() {
             [2, 4, 6]
         ];
 
-        if(getMove() > 2) {
+        if (getMove() > 2) {
             for(let i = 0; i < winCondition.length; i++) {
-                console.log(winCondition[i]);
                 if (findSubarray(winCondition[i], xPlacement)) { 
                     displayController.win(0); 
                     return;
@@ -252,8 +242,8 @@ const gameBoard = (function() {
     }
 
     const setValue = (e) => {
-        if(e.target.textContent)
-            return;
+        const turn = document.querySelector('.turn');
+        if (turn.getAttribute('lock') != null || e.target.textContent) { return; }
 
         e.target.textContent = (move % 2 == 0) ? 'X' : 'O';
         move++;
@@ -262,9 +252,7 @@ const gameBoard = (function() {
         displayController.showInfo();
     }
 
-    const getMove = () => {
-        return move;
-    }
+    const getMove = () => { return move; }
 
     return {
         generateBoard,
@@ -272,6 +260,5 @@ const gameBoard = (function() {
         getMove,
     } 
 })();
-
 
 menu.generateMenu();

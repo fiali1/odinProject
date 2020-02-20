@@ -108,11 +108,11 @@ const displayController = (function() {
         let move = gameBoard.getMove();
 
         const score = document.querySelector('.score');
-        score.textContent = `${player1.getScore()} X ${player2.getScore()}`;        
+        score.textContent = `${player1.name} | ${player1.getScore()} X ${player2.getScore()} | ${player2.name}`;        
         
         const turn = document.querySelector('.turn');
         if (turn.getAttribute('lock') != null) { return; }
-        turn.textContent = ((move % 2 == 0) ? `${player1.name}` : `${player2.name}`) + ' turn';
+        turn.textContent = ((move % 2 == 0) ? `${player1.name}` : `${player2.name}`) + '\'s turn';
     }
 
     const roundEnd = () => {
@@ -171,7 +171,6 @@ const gameBoard = (function() {
     const clearBoard = () => {
         container.lastChild.remove();
         container.lastChild.remove();
-
         const turn = document.querySelector('.turn');
         turn.toggleAttribute('lock');
 

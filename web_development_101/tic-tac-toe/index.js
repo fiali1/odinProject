@@ -1,18 +1,9 @@
 const playerFactory = (name) => {
     let score = 0;
-
-    const addScore = () => {
-        score++;
-    }
-
-    const getScore = () => {
-        return score;
-    }
-
-    const resetScore = () => {
-        score = 0;
-    }
-
+    const addScore = () => { score++ };
+    const getScore = () => { return score };
+    const resetScore = () => { score = 0 };
+    
     return { name, addScore, getScore, resetScore };
 };
 
@@ -42,7 +33,7 @@ const menu = (function() {
         player2.required = true;
         player1.placeholder = 'Player 1';
         player2.placeholder = 'Player 2';
-        submitButton.textContent = 'Submit';
+        submitButton.textContent = 'Submit names';
         submitButton.addEventListener('click', generatePlayers);
 
         form.appendChild(description);
@@ -63,13 +54,18 @@ const menu = (function() {
         p2Name = document.querySelector('#p2').value;
 
         if(p1Name == '' || p2Name == '') {
-            alert('Please insert the necessary information');
-            return; 
+            p1Name = 'Player 1';
+            p2Name = 'Player 2';
+        }
+
+        else if(p1Name == p2Name) {
+            alert('Error: Two players can\'t have the same name!');
+            return;
         }
 
         player1 = playerFactory(p1Name);
         player2 = playerFactory(p2Name);
-
+        
         clearMenu();
         displayController.generateDisplay();
         gameBoard.generateBoard();
@@ -88,22 +84,14 @@ const menu = (function() {
 const displayController = (function() {
     const container = document.querySelector('.container');
     let player1, player2;
-
-    const setPlayers = () => {
-        const players = menu.getPlayers();
-        player1 = players[0];
-        player2 = players[1];
-    }
-
+    
     const generateDisplay = () => {
         const display = document.createElement('div');
         const score = document.createElement('h3');
         const turn = document.createElement('h3');
-        
         display.classList.add('display');
         score.classList.add('score');
         turn.classList.add('turn');
-
         display.appendChild(score);
         display.appendChild(turn);
         container.appendChild(display);
@@ -111,25 +99,63 @@ const displayController = (function() {
         setPlayers();
         showInfo();
     }
-
+    
+    const setPlayers = () => {
+        const players = menu.getPlayers();
+        player1 = players[0];
+        player2 = players[1];
+    }
+    
     const showInfo = () => {
         let move = gameBoard.getMove();
-        console.log(move);
+
         const score = document.querySelector('.score');
+        score.textContent = `${player1.getScore()} X ${player2.getScore()}`;        
+        
         const turn = document.querySelector('.turn');
-        score.textContent = `${player1.getScore()} X ${player2.getScore()}`;
-        turn.textContent = (move % 2 == 0) ? `${player1.name}'s turn` : `${player2.name}'s turn`;
+        if(turn.getAttribute('lock') != null) { return; }
+        turn.textContent = ((move % 2 == 0) ? `${player1.name}` : `${player2.name}`) + ' turn';
+    }
+
+    const roundEnd = () => {
+        const roundBtn = document.createElement('button');
+        roundBtn.textContent = 'Restart';
+        roundBtn.classList.add('restart');
+        roundBtn.addEventListener('click', () => {
+            gameBoard.clearBoard();
+        });
+
+        container.appendChild(roundBtn);
+    }
+
+    const tie = () => {
+        console.log('TIE');
+        const turn = document.querySelector('.turn');
+        turn.textContent = 'It\'s a tie!';
+        turn.toggleAttribute('lock');
+        roundEnd();
+    }
+
+    const win = (player) => {
+        console.log('WON');
+        player == 0 ? player1.addScore() : player2.addScore();
+        const turn = document.querySelector('.turn');
+        turn.textContent =  ((player == 0) ? `${player1.name}` : `${player2.name}`) + ' won this round!';
+        turn.toggleAttribute('lock');
+        roundEnd();
     }
 
     return {
         generateDisplay,
         showInfo,
+        tie,
+        win,
     }
 })();
 
 const gameBoard = (function() {
     let move = 0;
-    let array = ['O', ,'X' , , ,'X' ,'O' , ,];
+    let array = [];
     const container = document.querySelector('.container');
 
     const generateBoard = () => {
@@ -146,12 +172,83 @@ const gameBoard = (function() {
         container.appendChild(board);
     };
 
+    const clearBoard = () => {
+        container.lastChild.remove();
+        container.lastChild.remove();
+
+        const turn = document.querySelector('.turn');
+        turn.toggleAttribute('lock');
+
+        array = [];
+        move = 0;
+        
+        displayController.showInfo();
+        generateBoard();
+    }
+
     const setArray = () => {
         for(i = 0; i < 9; i++) {
             square = document.querySelector(`#pos-${i}`);
             array[i] = square.textContent;                
         }
-        console.log(array);
+    }
+
+    const getSquares = (symbol) => {
+        let positions = [];
+        for(i = 0; i < array.length; i++) 
+            if(array[i] == symbol) { positions.push(i); }
+    
+        return positions;
+    }
+
+    const findSubarray = (main, sub) => {
+        let count = 0;
+        console.log('Main: ' + main, 'Sub: ' + sub, 'Count: ' + count);
+        for(let i = 0; i < main.length; i++) {
+            for(let j = 0; j < sub.length; j++) {
+                console.log('Main: ' + main[i], 'Sub: ' + sub[j], 'Count: ' + count);
+                if(main[i] == sub[j]) {
+                    count++; 
+                }
+            }
+            if(count == 3) { return true; }
+        }
+        
+        return false;
+    }
+
+    const checkBoard = () => {
+        let move = gameBoard.getMove();
+        let xPlacement = getSquares('X');
+        let oPlacement = getSquares('O');
+        const winCondition = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        if(getMove() > 2) {
+            for(let i = 0; i < winCondition.length; i++) {
+                console.log(winCondition[i]);
+                if (findSubarray(winCondition[i], xPlacement)) { 
+                    displayController.win(0); 
+                    return;
+                }
+                else if (findSubarray(winCondition[i], oPlacement)) { 
+                    displayController.win(1); 
+                    return;
+                }
+            }
+            if (getMove() == 9) {
+                displayController.tie();
+                return;
+            }
+        }
     }
 
     const setValue = (e) => {
@@ -161,6 +258,7 @@ const gameBoard = (function() {
         e.target.textContent = (move % 2 == 0) ? 'X' : 'O';
         move++;
         setArray();
+        checkBoard();
         displayController.showInfo();
     }
 
@@ -170,6 +268,7 @@ const gameBoard = (function() {
 
     return {
         generateBoard,
+        clearBoard,
         getMove,
     } 
 })();

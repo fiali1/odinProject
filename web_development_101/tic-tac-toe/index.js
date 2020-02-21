@@ -3,17 +3,14 @@ const playerFactory = (name) => {
     const addScore = () => { score++ };
     const getScore = () => { return score };
     const resetScore = () => { score = 0 };
-    
     return { name, addScore, getScore, resetScore };
 };
 
 const menu = (function() {
     let player1, player2;
     const container = document.querySelector('.container');
-
+    
     const generateMenu = () => {
-        if (container.hasChildNodes) { container.firstChild.remove(); }
-        
         const menu = document.createElement('div');
         const form = document.createElement('div');
         const description = document.createElement('h3');
@@ -26,6 +23,8 @@ const menu = (function() {
         description.textContent = 'Please insert the names of the players';
         player1.classList.add('player');
         player2.classList.add('player');
+        player1.setAttribute('autocomplete', 'off');
+        player2.setAttribute('autocomplete', 'off');
         player1.id = 'p1';
         player2.id = 'p2';
         player1.required = true;
@@ -43,8 +42,14 @@ const menu = (function() {
         container.appendChild(menu);
     }
 
+    const rebuildMenu = () => {
+        for(let i = 0; i < 3; i++)
+            container.lastChild.remove();
+        generateMenu();
+    }
+
     const clearMenu = () => {
-        if (container.hasChildNodes) { container.firstChild.remove(); }
+        if (container.hasChildNodes) { container.lastChild.remove(); }
         displayController.generateDisplay();
         gameBoard.generateBoard();
     }
@@ -56,6 +61,10 @@ const menu = (function() {
         if (p1Name == '' || p2Name == '') {
             p1Name = 'Player 1';
             p2Name = 'Player 2';
+        }
+        else if (p1Name == ' ' || p2Name == ' ') {
+            alert('Error: Please input a valid name!');
+            return;
         }
 
         else if (p1Name == p2Name) {
@@ -75,6 +84,7 @@ const menu = (function() {
 
     return {
         generateMenu,
+        rebuildMenu,
         getPlayers,
     }
 })();
@@ -105,25 +115,36 @@ const displayController = (function() {
     }
     
     const showInfo = () => {
-        let move = gameBoard.getMove();
-
+        let totalMoves = gameBoard.getMove()[0];
         const score = document.querySelector('.score');
+        const turn = document.querySelector('.turn');
+        
         score.textContent = `${player1.name} | ${player1.getScore()} X ${player2.getScore()} | ${player2.name}`;        
         
-        const turn = document.querySelector('.turn');
         if (turn.getAttribute('lock') != null) { return; }
-        turn.textContent = ((move % 2 == 0) ? `${player1.name}` : `${player2.name}`) + '\'s turn';
+        turn.textContent = ((totalMoves % 2 == 0) ? `${player1.name}` : `${player2.name}`) + '\'s turn';
     }
 
     const roundEnd = () => {
+        const buttonContainer = document.createElement('div');
+        const resetBtn = document.createElement('button');
         const roundBtn = document.createElement('button');
-        roundBtn.textContent = 'Restart';
-        roundBtn.classList.add('restart');
+        buttonContainer.classList.add('button-container');
+        resetBtn.textContent = 'Change Players';
+        resetBtn.classList.add('reset');
+        resetBtn.addEventListener('click', () => {
+            gameBoard.resetBoard();
+            menu.rebuildMenu();
+        });
+        roundBtn.classList.add('next');
+        roundBtn.textContent = 'Next Round';
         roundBtn.addEventListener('click', () => {
             gameBoard.clearBoard();
         });
 
-        container.appendChild(roundBtn);
+        buttonContainer.appendChild(resetBtn);
+        buttonContainer.appendChild(roundBtn);
+        container.appendChild(buttonContainer);
     }
 
     const tie = () => {
@@ -133,10 +154,14 @@ const displayController = (function() {
         roundEnd();
     }
 
-    const win = (player) => {
+    const win = (player, condition) => {
+        for(let i = 0; i < condition.length; i++) {
+            const square = document.querySelector(`#pos-${condition[i]}`);
+            square.classList.add('win');
+        }
         player == 0 ? player1.addScore() : player2.addScore();
         const turn = document.querySelector('.turn');
-        turn.textContent =  ((player == 0) ? `${player1.name}` : `${player2.name}`) + ' won this round!';
+        turn.textContent = ((player == 0) ? `${player1.name}` : `${player2.name}`) + ` won this round!`;
         turn.toggleAttribute('lock');
         roundEnd();
     }
@@ -150,14 +175,15 @@ const displayController = (function() {
 })();
 
 const gameBoard = (function() {
-    let move = 0;
+    let totalMoves = 0;
+    let turnMoves = 0;
     let array = [];
     const container = document.querySelector('.container');
 
     const generateBoard = () => {
         const board = document.createElement('div');
         board.classList.add('board');
-
+        
         for(i = 0; i < 9; i++) {
             const square = document.createElement('div');
             square.classList.add('square');
@@ -166,18 +192,25 @@ const gameBoard = (function() {
             board.appendChild(square);
         }
         container.appendChild(board);
+
+        displayController.showInfo();
     };
 
-    const clearBoard = () => {
-        container.lastChild.remove();
-        container.lastChild.remove();
+    const resetBoard = () => {
         const turn = document.querySelector('.turn');
         turn.toggleAttribute('lock');
-
         array = [];
-        move = 0;
+        turnMoves = 0;
+        totalMoves = 0;
+    }
+
+    const clearBoard = () => {
+        for(let i = 0; i < 2; i++ ) { container.lastChild.remove(); }
+        const turn = document.querySelector('.turn');
+        turn.toggleAttribute('lock');
+        array = [];
+        turnMoves = 0;
         
-        displayController.showInfo();
         generateBoard();
     }
 
@@ -204,7 +237,6 @@ const gameBoard = (function() {
 
             if (count == 3) { return true; }
         }
-        
         return false;
     }
 
@@ -222,18 +254,18 @@ const gameBoard = (function() {
             [2, 4, 6]
         ];
 
-        if (getMove() > 2) {
+        if (turnMoves > 2) {
             for(let i = 0; i < winCondition.length; i++) {
                 if (findSubarray(winCondition[i], xPlacement)) { 
-                    displayController.win(0); 
+                    displayController.win(0, winCondition[i]); 
                     return;
                 }
                 else if (findSubarray(winCondition[i], oPlacement)) { 
-                    displayController.win(1); 
+                    displayController.win(1, winCondition[i]); 
                     return;
                 }
             }
-            if (getMove() == 9) {
+            if (turnMoves == 9) {
                 displayController.tie();
                 return;
             }
@@ -244,18 +276,20 @@ const gameBoard = (function() {
         const turn = document.querySelector('.turn');
         if (turn.getAttribute('lock') != null || e.target.textContent) { return; }
 
-        e.target.textContent = (move % 2 == 0) ? 'X' : 'O';
-        move++;
+        e.target.textContent = (totalMoves % 2 == 0) ? 'X' : 'O';
+        totalMoves++;
+        turnMoves++;
         setArray();
         checkBoard();
         displayController.showInfo();
     }
 
-    const getMove = () => { return move; }
+    const getMove = () => { return [totalMoves, turnMoves]; }
 
     return {
         generateBoard,
         clearBoard,
+        resetBoard,
         getMove,
     } 
 })();

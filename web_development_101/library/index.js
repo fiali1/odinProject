@@ -1,11 +1,13 @@
 let array = JSON.parse(localStorage.getItem('storage'));
 let myLibrary = (!array) ? [] : array;
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {
+    constructor (title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 }
 
 function render(template, node) {

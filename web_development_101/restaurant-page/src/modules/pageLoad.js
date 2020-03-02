@@ -19,6 +19,7 @@ function pageLoad () {
     aboutText.classList.add('tab');
     contactText.classList.add('tab');
 
+    titleText.id = 'title';
     homeText.id = 'tab-1';
     aboutText.id = 'tab-2';
     contactText.id = 'tab-3';

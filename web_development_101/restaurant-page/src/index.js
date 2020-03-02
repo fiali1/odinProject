@@ -5,9 +5,10 @@ import about from './modules/about';
 import contact from './modules/contact';
 
 function switchTab(e) {
-    const id = e.target.id;
-    
     clearPage();
+    
+    e.target.classList.toggle('selected');
+    const id = e.target.id;
 
     switch (id) {
         case 'tab-1':

@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Bitter&display=swap');
+
 body {
     color: #fff;
     text-shadow: 2px 2px #000;
     transition: .5s all;
+    font-family: 'Bitter';
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('https://c.pxhere.com/photos/22/1e/interior_dark_restaurant_drink_food-143258.jpg!d');
+    background-size: cover;
+    background-position: top;
 }
 
 nav {
     position: relative;
     width: 90%;
+    height: 50px;
     margin: auto;
     padding: 5px 30px;
 }
@@ -18,23 +25,34 @@ nav ul {
 }
 
 nav ul li {
-    float: left;
+    display: inline-block;
     margin-right: 20px;
 }
 
-li {
-    cursor: pointer;
-}
-
-li h1 {
+#title {
     margin: 0;
     font-size: 32px;
     margin-right: 50px;
+    border-bottom: 2px solid #fff;
+    box-shadow: 0 2px #000;
 }
 
-li p {
+.tab {
     margin: 8px;
+    padding-bottom: 2px;
     font-size: 24px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.tab:hover {
+    color: #ff9100;
+    border-bottom: 2px solid #ff9100;
+}
+
+.selected {
+    color: #ff7b00;
+    border-bottom: 1px solid #ff7b00;
 }
 
 #content {
@@ -43,7 +61,7 @@ li p {
     justify-content: center;
     width: 960px;
     margin: auto;
-    padding: 150px;
+    padding: 120px;
 }
 
 .container {
@@ -57,7 +75,9 @@ li p {
 }
 
 .info h3, .contact-info h3 {
+    color: #ff9100;
     font-size: 48px;
+    margin: 20px;
 }
 
 .info p {
@@ -66,17 +86,17 @@ li p {
 }
 
 .container div {
-    background-color: #ffffff2a;
     border: 2px solid #fff;
     border-radius: 5px;
     padding: 10px;
 }
 
 .contact-info h3 {
-    margin: 30px;
+    margin-bottom: 30px;
 }
 
 .container div h3 {
+    color: #fff;
     margin: 15px;
     font-size: 30px;
     text-shadow: 1.2px 1.2px #000;
@@ -84,6 +104,6 @@ li p {
 
 .container div p {
     margin: 10px;
-    font-size: 24px;
+    font-size: 20px;
     text-shadow: 1.2px 1.2px #000;
 }

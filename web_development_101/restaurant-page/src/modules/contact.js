@@ -10,17 +10,17 @@ function contact () {
         const contactDescription = document.createElement('p');
 
         if (i == 0) {
-            contactIcon.src = './icons/message.png';
+            contactIcon.src = './icons/message-outline.png';
             contactHeader.textContent = 'Chat';
-            contactDescription.textContent = '123-4567';
+            contactDescription.textContent = '223-456-7890';
         }
         else if (i == 1) {
-            contactIcon.src = './icons/phone.png';
+            contactIcon.src = './icons/phone-outline.png';
             contactHeader.textContent = 'Phone';
-            contactDescription.textContent = '234-5678';
+            contactDescription.textContent = '234-567-8900';
         }
         else if (i == 2) {
-            contactIcon.src = './icons/email.png';
+            contactIcon.src = './icons/email-outline.png';
             contactHeader.textContent = 'Email';
             contactDescription.textContent = 'therestaurant@email.com';
         }

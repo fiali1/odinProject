@@ -1,0 +1,89 @@
+body {
+    color: #fff;
+    text-shadow: 2px 2px #000;
+    transition: .5s all;
+}
+
+nav {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    padding: 5px 30px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    float: left;
+    margin-right: 20px;
+}
+
+li {
+    cursor: pointer;
+}
+
+li h1 {
+    margin: 0;
+    font-size: 32px;
+    margin-right: 50px;
+}
+
+li p {
+    margin: 8px;
+    font-size: 24px;
+}
+
+#content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 960px;
+    margin: auto;
+    padding: 150px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.info, .contact-info {
+    text-align: center;
+}
+
+.info h3, .contact-info h3 {
+    font-size: 48px;
+}
+
+.info p {
+    font-size: 30px;
+    text-shadow: 1.2px 1.2px #000;
+}
+
+.container div {
+    background-color: #ffffff2a;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.contact-info h3 {
+    margin: 30px;
+}
+
+.container div h3 {
+    margin: 15px;
+    font-size: 30px;
+    text-shadow: 1.2px 1.2px #000;
+}
+
+.container div p {
+    margin: 10px;
+    font-size: 24px;
+    text-shadow: 1.2px 1.2px #000;
+}

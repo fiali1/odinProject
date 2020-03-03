@@ -1,8 +1,4 @@
-function contact () {
-    const content = document.querySelector('#content');
-    const info = document.createElement('div');
-    const header = document.createElement('h3');
-    const contactContainer = document.createElement('div');
+function createContact(contactContainer) {
     for(let i = 0; i < 3; i++) {
         const contactDiv = document.createElement('div');
         const contactIcon = document.createElement('img');
@@ -30,6 +26,15 @@ function contact () {
         contactDiv.appendChild(contactDescription);
         contactContainer.appendChild(contactDiv);
     }
+}
+
+function contact () {
+    const content = document.querySelector('#content');
+    const info = document.createElement('div');
+    const header = document.createElement('h3');
+    const contactContainer = document.createElement('div');
+
+    createContact(contactContainer);
 
     info.classList.add('contact-info');
     contactContainer.classList.add('container');

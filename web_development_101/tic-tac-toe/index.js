@@ -58,15 +58,20 @@ const menu = (function() {
         p1Name = document.querySelector('#p1').value;
         p2Name = document.querySelector('#p2').value;
 
-        if (p1Name == '' || p2Name == '') {
+        if (p1Name == '' && p2Name == '') {
             p1Name = 'Player 1';
+            p2Name = 'Player 2';
+        }
+        else if (p1Name == '' && p2Name != '') {
+            p1Name = 'Player 1';
+        }
+        else if (p1Name != '' && p2Name == '') {
             p2Name = 'Player 2';
         }
         else if (p1Name == ' ' || p2Name == ' ') {
             alert('Error: Please input a valid name!');
             return;
         }
-
         else if (p1Name == p2Name) {
             alert('Error: Two players can\'t have the same name!');
             return;

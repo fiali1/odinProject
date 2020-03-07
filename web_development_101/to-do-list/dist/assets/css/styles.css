@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+
+body {
+    background-color: #0a0a0a;
+    color: #CCC;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    height: 95vh;
+    padding: 10px;
+}
+
+.sidebar {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    padding: 20px 17px;
+    max-height: 95vh;
+    overflow-y: overlay;
+    overflow: auto;
+    background-color: #212121;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.btn-div {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.project-btn, 
+.todo-btn, 
+.submit-btn, 
+.cancel-btn {
+    font-size: 16px;
+    width: 48%;
+    color: #CCC;
+    font-family: 'Ubuntu Mono', monospace;
+    font-weight: bold;
+    background-color: #484848;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    outline: none;
+}
+
+.submit-btn,
+.cancel-btn {
+    width: initial;
+    margin-bottom: 10px;
+}
+
+.cancel-btn {
+    background-color: #680303;
+}
+
+.project-btn:hover, 
+.todo-btn:hover, 
+.submit-btn:hover 
+{
+    color: #EEE;
+    background-color: #99603d;
+}
+
+.cancel-btn:hover {
+    background-color: #7c0303;
+}
+
+.project-btn:active, 
+.todo-btn:active, 
+.submit-btn:active 
+{
+    color: #EEE;
+    background-color: #63402b;
+}
+
+.cancel-btn:active {
+    background-color: #770303;
+}
+
+.project-btn {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.todo-btn {
+    float: right;
+}
+
+.project-item {
+    margin-bottom: 20px;
+}
+
+.project-item-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: .1s ease;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.project-item-data h2 {
+    cursor: pointer;
+    margin: 3px 0;
+    padding: 10px;
+}
+
+#edit-icon, 
+#delete-icon 
+{
+    cursor: pointer;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+#edit-icon {
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.project-item-data:hover {
+    background-color: #805134;
+}
+
+.project-item-data:active {
+    background-color: #63402b;
+}
+
+.project-item[show] .project-item-data {
+    background-color: #724930;
+}
+
+.project-item ul {
+    margin: 0;
+    padding: 0;
+}
+
+.project-item ul li {
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: 7px;
+    padding: 7px;
+    padding-left: 10px;
+    background-color: #363636;
+    border-radius: 2px;
+    transition: .1s ease;
+}
+
+.project-item ul li:hover {
+    background-color: #414141;
+}
+
+.project-item ul li:active {
+    background-color: #353535;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 20px 40px;
+    background-color: #2b2b2b;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.empty-warning {
+    text-align: center;
+    font-size: 18px;
+}
+
+.dark-div {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000000ce;
+}
+
+.project, 
+.todo 
+{
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 1;
+    width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #212121;
+}
+
+.form-div {
+    margin-bottom: 10px;
+}
+
+.form-div h3 {
+    text-align: center;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.form-div label {
+    margin-bottom: 8px;
+}
+
+.form-div textarea {
+    resize: vertical;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.form-div input {
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #EEE;
+}
+
+.add-todo-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.list-div {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 0 20px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-div ul {
+    margin: 0;
+    padding: 0;
+}
+
+.list-div ul li {
+    list-style: none;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 3px;
+    transition: .1s ease;
+}
+
+.list-div ul li:hover {
+    background-color: #63402b;
+}
+
+.list-div ul li:active {
+    background-color: #5e3d28;
+}
+
+li[selected] {
+    background-color: #634735;
+}
+
+li a {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #555;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #634735;
+  }

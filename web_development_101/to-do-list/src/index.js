@@ -1,3 +1,3 @@
-import menu from './modules/menu';
+import sidebar from './modules/sidebar';
 
-menu();
+sidebar();

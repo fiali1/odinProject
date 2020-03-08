@@ -1,45 +1,11 @@
 import Todo from './todo'
 import Project from './project';
-
-const todo = new Todo('Software Engineering', 'World', '3/3/1998', 'High as a kite');
-const todo2 = new Todo('Artificial Life', 'There', '4/4/1998', 'High as a kite on a mountain');
-const todo3 = new Todo('Computer Networks', 'World', '5/5/1998', 'High as a kite');
-const todo4 = new Todo('JavaScript Track', 'World', '6/6/1998', 'High as a kite on the ISS');
-const todo5 = new Todo('To-Do List Project', 'World', '6/6/1998', 'High as a kite on the ISS');
-const todo6 = new Todo('Rock-Paper-Scissors UI', 'World', '6/6/1998', 'High as a kite on the ISS');
+import { displayTodo, clearDisplay } from './display';
 
 const project = new Project('All To Dos');
-const project2 = new Project('UFABC');
-const project3 = new Project('Odin Project');
 
-let todos = [];
 let projects = [];
-
-todos.push(todo);
-todos.push(todo2);
-todos.push(todo3);
-todos.push(todo4);
-todos.push(todo5);
-todos.push(todo6);
-
-project.addTodo(todo);
-project.addTodo(todo2);
-project.addTodo(todo3);
-project.addTodo(todo4);
-project.addTodo(todo5);
-project.addTodo(todo6);
-
-project2.addTodo(todo2);
-project2.addTodo(todo);
-project2.addTodo(todo3);
-
-project3.addTodo(todo4);
-project3.addTodo(todo5);
-project3.addTodo(todo6);
-
 projects.push(project);
-projects.push(project2);
-projects.push(project3);
 
 function generateList(e, opr) {
     const formDiv = document.querySelector('.form-div');
@@ -51,8 +17,9 @@ function generateList(e, opr) {
         
         div.classList.add('list-div');
 
+        //Generate either a list of projects or a list of to dos to be selected
         if(opr == 0) {
-            todos.forEach(todo => {
+            projects[0].getTodos().forEach(todo => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
     
@@ -66,17 +33,21 @@ function generateList(e, opr) {
             });
         }
         else if(opr == 1) {
+            let i = 0;
             projects.forEach(project => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
+                if(i != 0) {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
 
-                a.textContent = project.name;
-                a.addEventListener('click', (e) => {
-                    e.target.parentNode.toggleAttribute('selected');
-                });
+                    a.textContent = project.name;
+                    a.addEventListener('click', (e) => {
+                        e.target.parentNode.toggleAttribute('selected');
+                    });
 
-                li.appendChild(a);
-                ul.appendChild(li);
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                }
+                i++;
             });
         }
 
@@ -89,8 +60,14 @@ function generateList(e, opr) {
     }
 }
 
-function generateTodoForm() {
+function generateDarkDiv() {
     const darkDiv = document.createElement('div');
+    darkDiv.classList.add('dark-div');
+    return darkDiv;
+}
+
+function generateTodoForm() {
+    const darkDiv = generateDarkDiv();
     const formDiv = document.createElement('div');
     const formHeader = document.createElement('h3');
     const titleLabel = document.createElement('label');
@@ -107,7 +84,6 @@ function generateTodoForm() {
     const submitBtn = document.createElement('button');
     const cancelBtn = document.createElement('button');
     
-    darkDiv.classList.add('dark-div');
     formDiv.classList.add('form-div', 'todo');
     titleInput.classList.add('form-todo-title');
     descriptionInput.classList.add('form-todo-description');
@@ -155,7 +131,7 @@ function generateTodoForm() {
     formDiv.appendChild(priorityLabel);
     formDiv.appendChild(priorityInput);
 
-    if(projects.length != 0) {
+    if(projects.length > 1) {
         addTodoLabel.textContent = 'Attach To Do to some project?';
         addTodoInput.type = 'checkbox';
         addTodoInput.addEventListener('click', (e) => {
@@ -174,7 +150,7 @@ function generateTodoForm() {
 }
 
 function generateProjectForm() {
-    const darkDiv = document.createElement('div');
+    const darkDiv = generateDarkDiv();
     const formDiv = document.createElement('div');
     const formHeader = document.createElement('h3');
     const titleLabel = document.createElement('label');
@@ -185,7 +161,6 @@ function generateProjectForm() {
     const submitBtn = document.createElement('button');
     const cancelBtn = document.createElement('button');
 
-    darkDiv.classList.add('dark-div');
     formDiv.classList.add('form-div', 'project');
     titleInput.classList.add('form-project-title');
     addTodoDiv.classList.add('add-todo-div');
@@ -212,7 +187,7 @@ function generateProjectForm() {
     formDiv.appendChild(titleLabel);
     formDiv.appendChild(titleInput);
 
-    if(projects.length != 0) {
+    if(projects[0].getTodos().length != 0) {
         addTodoLabel.textContent = 'Add some existing To Dos?';
         addTodoInput.type = 'checkbox';
         addTodoInput.addEventListener('click', (e) => {
@@ -237,7 +212,7 @@ function clearForm() {
 function createProject(title) {
     const newProject = new Project(title);
     const check = document.querySelector('.form-check');
-
+    const todos = projects[0].getTodos();
     if(check != null && check.checked == true) {
         const selected = document.querySelectorAll('li[selected] a');
         selected.forEach(item => {
@@ -255,7 +230,8 @@ function createProject(title) {
 function createTodo(title, description, date, priority) {
     const newTodo = new Todo(title, description, date, priority);
     const check = document.querySelector('.form-check');
-
+    projects[0].addTodo(newTodo);
+    
     if(check != null && check.checked == true) {
         const selected = document.querySelectorAll('li[selected] a');
 
@@ -296,34 +272,51 @@ function clearProjects() {
     sidebar.lastChild.remove();
 }
 
-function deleteProject(item) {
-    const index = projects.indexOf(item);
+function deleteProject(projectItem) {
+    const data = projectItem.data;
+    const index = projects.indexOf(data);
+    const itemTodos = data.getTodos();
+    const displayedItemTitle = document.querySelector('.display-todo');
+
+    /*
+    *   Checks if there is a to do currently displayed. 
+    *   If true, then checks if it is among the to dos being deleted. 
+    *   If also true, clears the display.
+    */
+    if(displayedItemTitle != null) {
+        for(let i = 0; i < itemTodos.length; i++)
+            if(itemTodos[i].name == displayedItemTitle.firstChild.textContent)
+                clearDisplay();
+    }
+    
     if(index != -1)
         projects.splice(index, 1);
     
     generateProjects();
 }
 
-function showTodos(dataDiv, item) {
-    if(dataDiv.parentElement.getAttribute('show') != null) {
-        dataDiv.parentElement.toggleAttribute('show');
-        dataDiv.parentElement.lastChild.remove();
+function showTodos(projectItem) {
+    if(projectItem.getAttribute('show') != null) {
+        projectItem.toggleAttribute('show');
+        projectItem.lastChild.remove();
         return;
     }
 
-    dataDiv.parentElement.toggleAttribute('show');
+    projectItem.toggleAttribute('show');
     const todoDiv = document.createElement('ul');
-    const todos = item.getTodos();
+    const todos = projectItem.data.getTodos();
     todos.map(todo => {
         const todoItem = document.createElement('li');
         const todoTitle = document.createElement('a');
         
-        todoTitle.textContent = todo.name;
+        todoItem.data = todo;
+        todoTitle.textContent = todoItem.data.name;
+        todoItem.addEventListener('click', displayTodo);
     
         todoItem.appendChild(todoTitle);
         todoDiv.appendChild(todoItem);
     });
-    dataDiv.parentElement.appendChild(todoDiv);
+    projectItem.appendChild(todoDiv);
 }
 
 function emptyWarning() {
@@ -333,8 +326,8 @@ function emptyWarning() {
     const warningDescription = document.createElement('p');
 
     warningDiv.classList.add('empty-warning');
-    warningText.textContent = 'It appears you have no Projects.';
-    warningDescription.textContent = 'Start by creating one with the \'+ Project\' button and add some To Dos to it!';
+    warningText.textContent = 'It appears you have no Projects or To Dos.';
+    warningDescription.textContent = 'Start by creating either one with the \'+\' buttons!';
 
     warningDiv.appendChild(warningText);
     warningDiv.appendChild(warningDescription);
@@ -347,39 +340,44 @@ function generateProjects() {
     if(sidebar.childNodes.length == 2)
         clearProjects();
 
-    if(projects.length == 0) {
+    if(projects.length == 1 && projects[0].getTodos().length == 0) {
         emptyWarning();
         return;
     }
 
     const projectDiv = document.createElement('div');
-
+    projectDiv.classList.add('project-div');
+    
+    let i = 0;
     projects.forEach(item => {
-        let i = 1;
+        //Doesn't display All To Dos if there is no To Do
+        if(projects[0].getTodos().length == 0 && i++ == 0) { return; }
         const projectItem = document.createElement('div');
         const projectDataDiv = document.createElement('div');
         const projectItemName = document.createElement('h2');
         const projectEditIcon = document.createElement('img');
         const projectDeleteIcon = document.createElement('img');
-
-        projectDiv.classList.add('project-div');
-        projectItem.classList.add('project-item');
-        projectDataDiv.classList.add('project-item-data');
-
+        
         projectEditIcon.id = 'edit-icon';
         projectEditIcon.src = './assets/icons/pencil.png';
         projectDeleteIcon.id = 'delete-icon';
         projectDeleteIcon.src = './assets/icons/delete.png';
 
+        projectItem.data = item;    
+        projectItem.classList.add('project-item');
+        projectDataDiv.classList.add('project-item-data');
         projectItemName.textContent = item.name;
-        projectItemName.addEventListener('click', () => { showTodos(projectDataDiv, item); });
-        projectDeleteIcon.addEventListener('click', () => { deleteProject(item); });
-        
+        projectItemName.addEventListener('click', () => { showTodos(projectItem); });
+        projectDeleteIcon.addEventListener('click', () => { deleteProject(projectItem); });
+
         projectDataDiv.appendChild(projectItemName);
-        projectDataDiv.appendChild(projectEditIcon);
-        projectDataDiv.appendChild(projectDeleteIcon);
+        if(i != 0) {
+            projectDataDiv.appendChild(projectEditIcon);
+            projectDataDiv.appendChild(projectDeleteIcon);
+        }
         projectItem.appendChild(projectDataDiv);
         projectDiv.appendChild(projectItem);
+        i++;
     });
 
     sidebar.appendChild(projectDiv);
@@ -390,8 +388,8 @@ function generateMenu() {
     generateProjects();
 }
 
-function menu() {
+function sidebar() {
     generateMenu();
 }
 
-export default menu;
+export default sidebar;

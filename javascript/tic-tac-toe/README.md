@@ -1,5 +1,5 @@
 ## Functionalities:
-  - The traditional tik-tak-toe game. 
+  - The traditional tic-tac-toe game. 
   - Sets a match between two named (or not) players.
   - Allows sequences of matches, by displaying a score with each player's data.
   - Can be reset.

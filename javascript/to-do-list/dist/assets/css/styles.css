@@ -36,7 +36,11 @@ body {
 .project-btn, 
 .todo-btn, 
 .submit-btn, 
-.cancel-btn {
+.cancel-btn,
+.close-todo-btn,
+.edit-todo-btn,
+.delete-todo-btn
+{
     font-size: 16px;
     width: 48%;
     color: #CCC;
@@ -61,25 +65,33 @@ body {
 
 .project-btn:hover, 
 .todo-btn:hover, 
-.submit-btn:hover 
+.submit-btn:hover,
+.close-todo-btn:hover,
+.edit-todo-btn:hover 
 {
     color: #EEE;
     background-color: #99603d;
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover,
+.delete-todo-btn:hover
+{
     background-color: #7c0303;
 }
 
 .project-btn:active, 
 .todo-btn:active, 
-.submit-btn:active 
+.submit-btn:active,
+.close-todo-btn:active,
+.edit-todo-btn:active
 {
     color: #EEE;
     background-color: #63402b;
 }
 
-.cancel-btn:active {
+.cancel-btn:active,
+.delete-todo-btn:active
+{
     background-color: #770303;
 }
 
@@ -90,6 +102,16 @@ body {
 
 .todo-btn {
     float: right;
+}
+
+.close-todo-btn,
+.edit-todo-btn, 
+.delete-todo-btn 
+{
+    font-size: 14px;
+    width: 80px;
+    margin: 10px 0;
+    margin-right: 10px;
 }
 
 .project-item {
@@ -126,15 +148,23 @@ body {
     margin-right: 15px;
 }
 
-.project-item-data:hover {
+.project-item-data:hover, .listed-todo:hover {
     background-color: #805134;
 }
 
-.project-item-data:active {
+.project-item-data:active, .listed-todo:active {
     background-color: #63402b;
 }
 
 .project-item[show] .project-item-data {
+    background-color: #724930;
+}
+
+.project-item[empty] .project-item-data {
+    background-color: #770303;
+}
+
+.listed-todo[selected] {
     background-color: #724930;
 }
 

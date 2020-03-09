@@ -1,233 +1,39 @@
 import Todo from './todo'
 import Project from './project';
 import { displayTodo, clearDisplay } from './display';
+import { save, load } from './storage';
+import { generateProjectForm, generateTodoForm, clearForm } from './forms';
 
-const project = new Project('All To Dos');
+//Sets up a 'main' project that will hold all To Dos on the first run
+function setupStart() {
+    const project = new Project('All To Dos');
+    let projects = (load() == []) ? [] : load();
+    if (projects.length == 0) { projects.push(project); }
 
-let projects = [];
-projects.push(project);
-
-function generateList(e, opr) {
-    const formDiv = document.querySelector('.form-div');
-    const submitBtn = document.querySelector('.submit-btn');
-
-    if(e.target.checked == true) {
-        const div = document.createElement('div');
-        const ul = document.createElement('ul');
-        
-        div.classList.add('list-div');
-
-        //Generate either a list of projects or a list of to dos to be selected
-        if(opr == 0) {
-            projects[0].getTodos().forEach(todo => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-    
-                a.textContent = todo.name;
-                a.addEventListener('click', (e) => {
-                    e.target.parentNode.toggleAttribute('selected');
-                });
-    
-                li.appendChild(a);
-                ul.appendChild(li);
-            });
-        }
-        else if(opr == 1) {
-            let i = 0;
-            projects.forEach(project => {
-                if(i != 0) {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-
-                    a.textContent = project.name;
-                    a.addEventListener('click', (e) => {
-                        e.target.parentNode.toggleAttribute('selected');
-                    });
-
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                }
-                i++;
-            });
-        }
-
-        div.appendChild(ul);
-        formDiv.insertBefore(div, submitBtn);
-    }
-    else {
-        const todoDiv = document.querySelector('.list-div');
-        todoDiv.remove();
-    }
+    return projects;
 }
 
-function generateDarkDiv() {
-    const darkDiv = document.createElement('div');
-    darkDiv.classList.add('dark-div');
-    return darkDiv;
-}
-
-function generateTodoForm() {
-    const darkDiv = generateDarkDiv();
-    const formDiv = document.createElement('div');
-    const formHeader = document.createElement('h3');
-    const titleLabel = document.createElement('label');
-    const titleInput = document.createElement('input');
-    const descriptionLabel = document.createElement('label');
-    const descriptionInput = document.createElement('textarea');
-    const dateLabel = document.createElement('label');
-    const dateInput = document.createElement('input');
-    const priorityLabel = document.createElement('label');
-    const priorityInput = document.createElement('input');
-    const addTodoDiv = document.createElement('div');
-    const addTodoLabel = document.createElement('label');
-    const addTodoInput = document.createElement('input');
-    const submitBtn = document.createElement('button');
-    const cancelBtn = document.createElement('button');
-    
-    formDiv.classList.add('form-div', 'todo');
-    titleInput.classList.add('form-todo-title');
-    descriptionInput.classList.add('form-todo-description');
-    dateInput.classList.add('form-todo-date');
-    priorityInput.classList.add('form-todo-priority');
-    submitBtn.classList.add('submit-btn');
-    cancelBtn.classList.add('cancel-btn');
-
-    formHeader.textContent = 'Create Your New To Do';
-    titleLabel.textContent = 'To Do Title';
-    titleInput.placeholder = 'Enter To Do Title';
-    descriptionLabel.textContent = 'Description';
-    descriptionInput.placeholder = 'Enter A Short Description';
-    descriptionInput.setAttribute('rows', '2');
-    dateLabel.textContent = 'Due Date';
-    dateInput.placeholder = 'Enter Due Date (dd/mm/yy)';
-    priorityLabel.textContent = 'Priority';
-    priorityInput.placeholder = 'Set Priority (1 to 10)';
-    addTodoDiv.classList.add('add-todo-div');
-    addTodoInput.classList.add('form-check');
-    submitBtn.textContent = 'Submit';
-    cancelBtn.textContent = 'Cancel';
-
-    submitBtn.addEventListener('click', () => {
-        const title = titleInput.value;
-        const description = descriptionInput.value;
-        const date = dateInput.value;
-        const priority = priorityInput.value;
-
-        createTodo(title, description, date, priority);
-    });
-
-    cancelBtn.addEventListener('click', () => {
-        clearForm(formDiv);
-        return;
-    })
-
-    formDiv.appendChild(formHeader);
-    formDiv.appendChild(titleLabel);
-    formDiv.appendChild(titleInput);
-    formDiv.appendChild(descriptionLabel);
-    formDiv.appendChild(descriptionInput);
-    formDiv.appendChild(dateLabel);
-    formDiv.appendChild(dateInput);
-    formDiv.appendChild(priorityLabel);
-    formDiv.appendChild(priorityInput);
-
-    if(projects.length > 1) {
-        addTodoLabel.textContent = 'Attach To Do to some project?';
-        addTodoInput.type = 'checkbox';
-        addTodoInput.addEventListener('click', (e) => {
-            generateList(e, 1);
-        });
-
-        addTodoDiv.appendChild(addTodoLabel);
-        addTodoDiv.appendChild(addTodoInput);
-        formDiv.appendChild(addTodoDiv);
-    }
-
-    formDiv.appendChild(submitBtn);
-    formDiv.appendChild(cancelBtn);
-    darkDiv.appendChild(formDiv);
-    document.body.appendChild(darkDiv);
-}
-
-function generateProjectForm() {
-    const darkDiv = generateDarkDiv();
-    const formDiv = document.createElement('div');
-    const formHeader = document.createElement('h3');
-    const titleLabel = document.createElement('label');
-    const titleInput = document.createElement('input');
-    const addTodoDiv = document.createElement('div');
-    const addTodoLabel = document.createElement('label');
-    const addTodoInput = document.createElement('input');
-    const submitBtn = document.createElement('button');
-    const cancelBtn = document.createElement('button');
-
-    formDiv.classList.add('form-div', 'project');
-    titleInput.classList.add('form-project-title');
-    addTodoDiv.classList.add('add-todo-div');
-    addTodoInput.classList.add('form-check');
-    submitBtn.classList.add('submit-btn');
-    cancelBtn.classList.add('cancel-btn');
-
-    formHeader.textContent = 'Create Your New Project';
-    titleLabel.textContent = 'Project Title';
-    titleInput.placeholder = 'Enter Project Title';
-    submitBtn.textContent = 'Submit';
-    cancelBtn.textContent = 'Cancel';
-    
-    submitBtn.addEventListener('click', function() {
-        const title = titleInput.value;
-        createProject(title, formDiv);
-    });
-    cancelBtn.addEventListener('click', () => {
-        clearForm(formDiv);
-        return;
-    })
-
-    formDiv.appendChild(formHeader);
-    formDiv.appendChild(titleLabel);
-    formDiv.appendChild(titleInput);
-
-    if(projects[0].getTodos().length != 0) {
-        addTodoLabel.textContent = 'Add some existing To Dos?';
-        addTodoInput.type = 'checkbox';
-        addTodoInput.addEventListener('click', (e) => {
-            generateList(e, 0);
-        });
-
-        addTodoDiv.appendChild(addTodoLabel);
-        addTodoDiv.appendChild(addTodoInput);
-        formDiv.appendChild(addTodoDiv);
-    }
-    formDiv.appendChild(submitBtn);
-    formDiv.appendChild(cancelBtn);
-    darkDiv.appendChild(formDiv);
-    document.body.appendChild(darkDiv);
-}
-
-function clearForm() {
-    const darkDiv = document.querySelector('.dark-div');
-    darkDiv.remove();
-}
-
-function createProject(title) {
+export function createProject(title, projects) {
     const newProject = new Project(title);
     const check = document.querySelector('.form-check');
-    const todos = projects[0].getTodos();
+    const todos = projects[0].todos;
+
     if(check != null && check.checked == true) {
         const selected = document.querySelectorAll('li[selected] a');
+
         selected.forEach(item => {
             for(let i = 0; i < todos.length; i++) 
-                if(todos[i].name == item.textContent)
-                    newProject.addTodo(todos[i]);
+                if(todos[i].name == item.textContent) { newProject.addTodo(todos[i]); }
         });
     }
 
     projects.push(newProject);
+    save(projects);
     clearForm();
-    generateProjects();
+    generateProjects(projects);
 }
 
-function createTodo(title, description, date, priority) {
+export function createTodo(title, description, date, priority, projects) {
     const newTodo = new Todo(title, description, date, priority);
     const check = document.querySelector('.form-check');
     projects[0].addTodo(newTodo);
@@ -237,17 +43,16 @@ function createTodo(title, description, date, priority) {
 
         selected.forEach(item => {
             for(let i = 0; i < projects.length; i++) 
-                if(projects[i].name == item.textContent) {
-                    projects[i].addTodo(newTodo);
-                }
+                if(projects[i].name == item.textContent) { projects[i].addTodo(newTodo); }
         });
     }
 
+    save(projects);
     clearForm();
-    generateProjects();
+    generateProjects(projects);
 }
 
-function generateButtons() {
+function generateButtons(projects) {
     const sidebar = document.querySelector('.sidebar');
     const btnDiv = document.createElement('div');
     const projectBtn = document.createElement('button');
@@ -258,9 +63,9 @@ function generateButtons() {
     todoBtn.classList.add('todo-btn');
 
     projectBtn.textContent = '+ Project';
-    projectBtn.addEventListener('click', generateProjectForm);
+    projectBtn.addEventListener('click', () => generateProjectForm(projects));
     todoBtn.textContent = '+ Todo';
-    todoBtn.addEventListener('click', generateTodoForm);
+    todoBtn.addEventListener('click', ()=> generateTodoForm(projects, 0));
 
     btnDiv.appendChild(projectBtn);
     btnDiv.appendChild(todoBtn);
@@ -272,10 +77,10 @@ function clearProjects() {
     sidebar.lastChild.remove();
 }
 
-function deleteProject(projectItem) {
+function deleteProject(projectItem, projects) {
     const data = projectItem.data;
     const index = projects.indexOf(data);
-    const itemTodos = data.getTodos();
+    const itemTodos = data.todos;
     const displayedItemTitle = document.querySelector('.display-todo');
 
     /*
@@ -292,10 +97,18 @@ function deleteProject(projectItem) {
     if(index != -1)
         projects.splice(index, 1);
     
-    generateProjects();
+    save(projects);
+    generateProjects(projects);
 }
 
-function showTodos(projectItem) {
+function showTodos(projectItem, projects) {
+    if(projectItem.data.todos.length == 0) { 
+        projectItem.toggleAttribute('empty');
+        setTimeout(()=> {
+            projectItem.toggleAttribute('empty');
+        }, 500);
+        return; 
+    }
     if(projectItem.getAttribute('show') != null) {
         projectItem.toggleAttribute('show');
         projectItem.lastChild.remove();
@@ -304,14 +117,13 @@ function showTodos(projectItem) {
 
     projectItem.toggleAttribute('show');
     const todoDiv = document.createElement('ul');
-    const todos = projectItem.data.getTodos();
+    const todos = projectItem.data.todos;
     todos.map(todo => {
         const todoItem = document.createElement('li');
         const todoTitle = document.createElement('a');
-        
         todoItem.data = todo;
         todoTitle.textContent = todoItem.data.name;
-        todoItem.addEventListener('click', displayTodo);
+        todoItem.addEventListener('click', (e) => displayTodo(e, projects));
     
         todoItem.appendChild(todoTitle);
         todoDiv.appendChild(todoItem);
@@ -334,13 +146,13 @@ function emptyWarning() {
     sidebar.appendChild(warningDiv);
 }
 
-function generateProjects() {
+export function generateProjects(projects) {
     const sidebar = document.querySelector('.sidebar');
 
     if(sidebar.childNodes.length == 2)
         clearProjects();
 
-    if(projects.length == 1 && projects[0].getTodos().length == 0) {
+    if(projects.length <= 1 && projects[0].todos.length == 0) {
         emptyWarning();
         return;
     }
@@ -351,7 +163,7 @@ function generateProjects() {
     let i = 0;
     projects.forEach(item => {
         //Doesn't display All To Dos if there is no To Do
-        if(projects[0].getTodos().length == 0 && i++ == 0) { return; }
+        if(projects[0].todos.length == 0 && i++ == 0) { return; }
         const projectItem = document.createElement('div');
         const projectDataDiv = document.createElement('div');
         const projectItemName = document.createElement('h2');
@@ -367,8 +179,8 @@ function generateProjects() {
         projectItem.classList.add('project-item');
         projectDataDiv.classList.add('project-item-data');
         projectItemName.textContent = item.name;
-        projectItemName.addEventListener('click', () => { showTodos(projectItem); });
-        projectDeleteIcon.addEventListener('click', () => { deleteProject(projectItem); });
+        projectItemName.addEventListener('click', () => { showTodos(projectItem, projects); });
+        projectDeleteIcon.addEventListener('click', () => { deleteProject(projectItem, projects); });
 
         projectDataDiv.appendChild(projectItemName);
         if(i != 0) {
@@ -383,13 +195,10 @@ function generateProjects() {
     sidebar.appendChild(projectDiv);
 }
 
-function generateMenu() {
-    generateButtons();
-    generateProjects();
-}
-
 function sidebar() {
-    generateMenu();
+    const projects = setupStart();
+    generateButtons(projects);
+    generateProjects(projects);
 }
 
 export default sidebar;

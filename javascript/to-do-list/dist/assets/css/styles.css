@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
 
 body {
-    background-color: #0a0a0a;
-    color: #CCC;
     font-family: 'Ubuntu Mono', monospace;
 }
 
@@ -10,6 +8,7 @@ body {
     display: flex;
     flex-direction: row;
     margin: auto;
+    width: 1100px;
     height: 95vh;
     padding: 10px;
 }
@@ -18,12 +17,11 @@ body {
     user-select: none;
     display: flex;
     flex-direction: column;
-    width: 22.5%;
+    width: 30%;
     padding: 20px 17px;
     max-height: 95vh;
     overflow-y: overlay;
     overflow: auto;
-    background-color: #212121;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -39,14 +37,15 @@ body {
 .cancel-btn,
 .close-todo-btn,
 .edit-todo-btn,
-.delete-todo-btn
+.delete-todo-btn,
+.yes-btn,
+.no-btn
 {
     font-size: 16px;
-    width: 48%;
+    width: 47%;
     color: #CCC;
     font-family: 'Ubuntu Mono', monospace;
     font-weight: bold;
-    background-color: #484848;
     border: none;
     border-radius: 3px;
     padding: 10px;
@@ -63,36 +62,11 @@ body {
     background-color: #680303;
 }
 
-.project-btn:hover, 
-.todo-btn:hover, 
-.submit-btn:hover,
-.close-todo-btn:hover,
-.edit-todo-btn:hover 
-{
-    color: #EEE;
-    background-color: #99603d;
-}
-
 .cancel-btn:hover,
-.delete-todo-btn:hover
+.delete-todo-btn:hover,
+.yes-btn:hover
 {
     background-color: #7c0303;
-}
-
-.project-btn:active, 
-.todo-btn:active, 
-.submit-btn:active,
-.close-todo-btn:active,
-.edit-todo-btn:active
-{
-    color: #EEE;
-    background-color: #63402b;
-}
-
-.cancel-btn:active,
-.delete-todo-btn:active
-{
-    background-color: #770303;
 }
 
 .project-btn {
@@ -133,6 +107,11 @@ body {
     padding: 10px;
 }
 
+.all-todos {
+    justify-content: space-between;
+}
+
+#clear-icon,
 #edit-icon, 
 #delete-icon 
 {
@@ -148,26 +127,6 @@ body {
     margin-right: 15px;
 }
 
-.project-item-data:hover, .listed-todo:hover {
-    background-color: #805134;
-}
-
-.project-item-data:active, .listed-todo:active {
-    background-color: #63402b;
-}
-
-.project-item[show] .project-item-data {
-    background-color: #724930;
-}
-
-.project-item[empty] .project-item-data {
-    background-color: #770303;
-}
-
-.listed-todo[selected] {
-    background-color: #724930;
-}
-
 .project-item ul {
     margin: 0;
     padding: 0;
@@ -179,25 +138,15 @@ body {
     margin-bottom: 7px;
     padding: 7px;
     padding-left: 10px;
-    background-color: #363636;
     border-radius: 2px;
     transition: .1s ease;
-}
-
-.project-item ul li:hover {
-    background-color: #414141;
-}
-
-.project-item ul li:active {
-    background-color: #353535;
 }
 
 .display {
     display: flex;
     flex-direction: column;
-    width: 77.5%;
+    width: 70%;
     padding: 20px 40px;
-    background-color: #2b2b2b;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -217,7 +166,8 @@ body {
 }
 
 .project, 
-.todo 
+.todo,
+.clear-warning
 {
     position: fixed;
     top: 100px;
@@ -230,7 +180,16 @@ body {
     justify-content: center;
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #212121;
+}
+
+.clear-warning {
+    text-align: center;
+}
+
+.yes-btn, .no-btn {
+    color: #333;
+    width: initial;
+    margin-bottom: 10px;
 }
 
 .form-div {
@@ -289,37 +248,10 @@ body {
     transition: .1s ease;
 }
 
-.list-div ul li:hover {
-    background-color: #63402b;
-}
-
-.list-div ul li:active {
-    background-color: #5e3d28;
-}
-
-li[selected] {
-    background-color: #634735;
-}
-
 li a {
     cursor: pointer;
 }
 
 ::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #555;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #333;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #634735;
-  }
+}

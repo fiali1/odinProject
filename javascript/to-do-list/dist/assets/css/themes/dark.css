@@ -1,0 +1,120 @@
+body {
+    background-color: #0a0a0a;
+    color: #CCC;
+}
+
+.sidebar {
+    background-color: #212121;
+}
+
+.project-btn, 
+.todo-btn, 
+.submit-btn, 
+.cancel-btn,
+.close-todo-btn,
+.edit-todo-btn,
+.delete-todo-btn,
+.yes-btn,
+.no-btn
+{
+    color: #CCC;
+    background-color: #484848;
+}
+
+.project-btn:hover, 
+.todo-btn:hover, 
+.submit-btn:hover,
+.close-todo-btn:hover,
+.edit-todo-btn:hover ,
+.no-btn:hover
+{
+    color: #EEE;
+    background-color: #99603d;
+}
+
+.project-btn:active, 
+.todo-btn:active, 
+.submit-btn:active,
+.close-todo-btn:active,
+.edit-todo-btn:active,
+.no-btn:hover
+{
+    color: #EEE;
+    background-color: #63402b;
+}
+
+.project-item-data:hover, .listed-todo:hover {
+    background-color: #805134;
+}
+
+.project-item-data:active, .listed-todo:active {
+    background-color: #63402b;
+}
+
+.project-item[show] .project-item-data {
+    background-color: #724930;
+}
+
+.project-item[empty] .project-item-data {
+    background-color: #770303;
+}
+
+.listed-todo[selected] {
+    background-color: #724930;
+}
+
+.project-item ul li {
+    background-color: #363636;
+}
+
+.project-item ul li:hover {
+    background-color: #414141;
+}
+
+.project-item ul li:active {
+    background-color: #353535;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 20px 40px;
+    background-color: #2b2b2b;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.project, 
+.todo,
+.clear-warning
+{
+    background-color: #212121;
+}
+
+.list-div ul li:hover {
+    background-color: #63402b;
+}
+
+.list-div ul li:active {
+    background-color: #5e3d28;
+}
+
+li[selected] {
+    background-color: #634735;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #555;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #333;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #634735;
+}

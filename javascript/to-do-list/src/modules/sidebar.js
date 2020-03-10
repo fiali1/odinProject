@@ -2,7 +2,7 @@ import Todo from './todo'
 import Project from './project';
 import { displayTodo, clearDisplay } from './display';
 import { save, load } from './storage';
-import { generateProjectForm, generateTodoForm, clearForm } from './forms';
+import { generateProjectForm, generateTodoForm, generateDarkDiv, clearForm } from './forms';
 
 //Sets up a 'main' project that will hold all To Dos on the first run
 function setupStart() {
@@ -77,6 +77,27 @@ function clearProjects() {
     sidebar.lastChild.remove();
 }
 
+function editProject(projectItem, projects) {
+    generateProjectForm(projects, 1);
+    const data = projectItem.data;
+    const titleInput = document.querySelector('.form-project-title');
+    const submitBtn = document.querySelector('.submit-btn');
+    
+    titleInput.value = data._name;
+    
+    const newSubmitBtn = submitBtn.cloneNode();
+    newSubmitBtn.classList.add('submit-btn');
+    newSubmitBtn.textContent = 'Submit';
+
+    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+    newSubmitBtn.addEventListener('click', () => {
+        const title = titleInput.value;
+
+        deleteProject(projectItem, projects);
+        createProject(title, projects);
+    });
+}
+
 function deleteProject(projectItem, projects) {
     const data = projectItem.data;
     const index = projects.indexOf(data);
@@ -146,9 +167,44 @@ function emptyWarning() {
     sidebar.appendChild(warningDiv);
 }
 
+function clearTodos(projects) {
+    projects.forEach(project => {
+        project._todos = [];
+    });
+
+    save(projects);
+    clearDisplay();
+    clearForm();
+    generateProjects(projects);
+}
+
+function clearWarning(projects) {
+    const darkDiv = generateDarkDiv();
+    const warningDiv = document.createElement('div');
+    const warningText = document.createElement('h3');
+    const yesBtn = document.createElement('button');
+    const noBtn = document.createElement('button');
+
+    warningDiv.classList.add('clear-warning');
+    warningText.textContent = 'Are you sure you want to delete all To Dos?';
+    yesBtn.classList.add('yes-btn');
+    noBtn.classList.add('no-btn');
+    yesBtn.textContent = 'Yes';
+    noBtn.textContent = 'No';
+
+    yesBtn.addEventListener('click', () => clearTodos(projects));
+    noBtn.addEventListener('click', () => clearForm());
+
+    warningDiv.appendChild(warningText);
+    warningDiv.appendChild(yesBtn);
+    warningDiv.appendChild(noBtn);
+    darkDiv.appendChild(warningDiv);
+    document.body.appendChild(darkDiv);
+}
+
 export function generateProjects(projects) {
     const sidebar = document.querySelector('.sidebar');
-
+    const theme = document.querySelector('#theme').getAttribute('theme');
     if(sidebar.childNodes.length == 2)
         clearProjects();
 
@@ -167,25 +223,33 @@ export function generateProjects(projects) {
         const projectItem = document.createElement('div');
         const projectDataDiv = document.createElement('div');
         const projectItemName = document.createElement('h2');
-        const projectEditIcon = document.createElement('img');
-        const projectDeleteIcon = document.createElement('img');
         
-        projectEditIcon.id = 'edit-icon';
-        projectEditIcon.src = './assets/icons/pencil.png';
-        projectDeleteIcon.id = 'delete-icon';
-        projectDeleteIcon.src = './assets/icons/delete.png';
-
         projectItem.data = item;    
         projectItem.classList.add('project-item');
         projectDataDiv.classList.add('project-item-data');
         projectItemName.textContent = item.name;
-        projectItemName.addEventListener('click', () => { showTodos(projectItem, projects); });
-        projectDeleteIcon.addEventListener('click', () => { deleteProject(projectItem, projects); });
-
+        projectItemName.addEventListener('click', () => showTodos(projectItem, projects));
         projectDataDiv.appendChild(projectItemName);
+        
         if(i != 0) {
+            const projectEditIcon = document.createElement('img');
+            const projectDeleteIcon = document.createElement('img');
+            projectEditIcon.id = 'edit-icon';
+            projectEditIcon.src = `./assets/icons/pencil-${theme}.png`;
+            projectDeleteIcon.id = 'delete-icon';
+            projectDeleteIcon.src = `./assets/icons/delete-${theme}.png`;
+            projectEditIcon.addEventListener('click', () => editProject(projectItem, projects));
+            projectDeleteIcon.addEventListener('click', () => deleteProject(projectItem, projects));
             projectDataDiv.appendChild(projectEditIcon);
             projectDataDiv.appendChild(projectDeleteIcon);
+        }
+        else {
+            projectDataDiv.classList.add('all-todos');
+            const projectClearIcon = document.createElement('img');
+            projectClearIcon.id = 'clear-icon';
+            projectClearIcon.src = `./assets/icons/close-${theme}.png`;
+            projectClearIcon.addEventListener('click', () => clearWarning(projects));
+            projectDataDiv.appendChild(projectClearIcon);
         }
         projectItem.appendChild(projectDataDiv);
         projectDiv.appendChild(projectItem);

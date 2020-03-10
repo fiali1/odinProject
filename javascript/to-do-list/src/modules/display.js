@@ -4,23 +4,9 @@ import { generateTodoForm } from './forms';
 
 export function clearDisplay() {
     const todoDiv = document.querySelector('.display-todo');
-    todoDiv.remove();
+    if(todoDiv != null)
+        todoDiv.remove();
 }
-
-function findTodo(data, projects) {
-    const indexes = [];
-    let i = 0;
-    
-    projects.forEach(project => {
-        const todos = project._todos;
-        const index = todos.indexOf(data);
-        if(index != -1)
-            indexes.push(i);
-        i++;
-    });
-    
-    return indexes;
-} 
 
 function editTodo(todoDiv, projects) {
     generateTodoForm(projects, 1);
@@ -54,12 +40,8 @@ function editTodo(todoDiv, projects) {
 
 function deleteTodo(todoDiv, projects) {
     const data = todoDiv.data;
-    const indexes = findTodo(data, projects);
-    
-    indexes.forEach(index => {
-        const i = projects[index]._todos.indexOf(data);
-
-        if(i != -1) { projects[index]._todos.splice(i, 1); }
+    projects.forEach(project => {
+        project.removeTodo(data);
     })
 
     clearDisplay();

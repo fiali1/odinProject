@@ -7,7 +7,7 @@ export function clearForm() {
 }
 
 //Generates dark background div to allocate form
-function generateDarkDiv() {
+export function generateDarkDiv() {
     const darkDiv = document.createElement('div');
     darkDiv.classList.add('dark-div');
     return darkDiv;
@@ -145,7 +145,7 @@ export function generateTodoForm(projects, opr) {
     document.body.appendChild(darkDiv);
 }
 
-export function generateProjectForm(projects) {
+export function generateProjectForm(projects, opr) {
     const darkDiv = generateDarkDiv();
     const formDiv = document.createElement('div');
     const formHeader = document.createElement('h3');
@@ -164,7 +164,7 @@ export function generateProjectForm(projects) {
     submitBtn.classList.add('submit-btn');
     cancelBtn.classList.add('cancel-btn');
 
-    formHeader.textContent = 'Create Your New Project';
+    formHeader.textContent = (opr == 0) ? 'Create Your New Project' : 'Edit Your Project';
     titleLabel.textContent = 'Project Title';
     titleInput.placeholder = 'Enter Project Title';
     submitBtn.textContent = 'Submit';

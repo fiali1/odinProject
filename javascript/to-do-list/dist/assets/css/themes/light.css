@@ -1,0 +1,171 @@
+body {
+    background-color: #62757f;
+    color: #333;
+}
+
+.sidebar {
+    background-color: #9ea7aa;
+}
+
+.project-btn, 
+.todo-btn, 
+.submit-btn, 
+.cancel-btn
+{
+    color: #333;
+    background-color: #d4dee2;
+}
+
+.close-todo-btn,
+.edit-todo-btn,
+.delete-todo-btn 
+{
+    color: #333;
+    background-color: #eee;
+    border: 2px solid #aaa;
+}
+
+.close-todo-btn {
+    border: 2px solid #c98d33;
+}
+
+.project-btn:hover, 
+.todo-btn:hover, 
+.submit-btn:hover
+{
+    color: #111;
+    background-color: #ffdda9;
+}
+
+.close-todo-btn:hover {
+    color: #222;
+    background-color: #c98d33;
+}
+
+.edit-todo-btn:hover {
+    background-color: #AAA;
+}
+
+.project-btn:active, 
+.todo-btn:active, 
+.submit-btn:active
+{
+    color: #222;
+    background-color: #ffdda9;
+}
+
+.submit-btn {
+    border: 2px solid #82b12c;
+}
+
+.submit-btn:hover {
+    color: #EEE;
+    background-color: #82b12c;
+}
+
+.cancel-btn, .delete-todo-btn {
+    border: 2px solid #b45c5c;
+}
+
+.cancel-btn:hover, .delete-todo-btn:hover  {
+    color: #EEE;
+    background-color: #b45c5c;
+}
+
+.yes-btn {
+    border: 2px solid #7c0303;
+}
+
+.yes-btn:hover {
+    color: #EEE;
+    background-color: #7c0303;
+}
+
+.no-btn {
+    border: 2px solid #ffca7b;
+}
+
+.no-btn:hover {
+    background-color: #ffca7b;
+}
+
+.project-item-data:hover, .listed-todo:hover {
+    background-color: #ffdda9;
+}
+
+.project-item-data:active, .listed-todo:active {
+    background-color: #ffdda9;
+}
+
+.project-item[show] .project-item-data {
+    background-color: #ffe8c5;
+}
+
+.project-item[empty] .project-item-data {
+    background-color: #be5757;
+}
+
+.project-item ul li {
+    background-color: #ddd;
+}
+
+.project-item ul li:hover {
+    background-color: #ccc;
+}
+
+.project-item ul li:active {
+    background-color: #cacaca;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 20px 40px;
+    background-color: #cfd8dc;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.project, 
+.todo,
+.clear-warning
+{
+    background-color: #c2c2c2;
+}
+
+.form-div input, .form-div textarea {
+    background-color: #EEE;
+    border: 1px solid #222;
+}
+
+.form-div input:hover, .form-div textarea:hover {
+    background-color: #E5E5E5;
+}
+
+.list-div ul li:hover {
+    background-color: #ffdda9;
+}
+
+.list-div ul li:active {
+    background-color: #ffdda9;
+}
+
+li[selected] {
+    background-color: #ffe8c5;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #AAA;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #DDD;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #9b6e52;
+}

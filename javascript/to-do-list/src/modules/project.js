@@ -10,7 +10,8 @@ class Project {
     addTodo(todo) { this._todos.push(todo); }
     removeTodo(todo) {
         const index = this._todos.indexOf(todo);
-        this._todos.splice(index, 1);
+        if(index != -1)
+            this._todos.splice(index, 1);
     }
 
     //Display data

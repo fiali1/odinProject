@@ -134,6 +134,10 @@ body {
     background-color: #c2c2c2;
 }
 
+.yes-btn, .no-btn {
+    color: #333;
+}
+
 .form-div input, .form-div textarea {
     background-color: #EEE;
     border: 1px solid #222;

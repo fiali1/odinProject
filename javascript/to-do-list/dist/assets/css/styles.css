@@ -175,7 +175,8 @@ body {
     transform: translate(-50%, 0);
     z-index: 1;
     width: 325px;
-    display: flex;
+    display: flex;  
+    background-color: #CCC;
     flex-direction: column;
     justify-content: center;
     padding: 10px 20px;
@@ -187,7 +188,6 @@ body {
 }
 
 .yes-btn, .no-btn {
-    color: #333;
     width: initial;
     margin-bottom: 10px;
 }

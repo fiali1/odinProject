@@ -2,7 +2,8 @@ import Todo from './todo'
 import Project from './project';
 import { displayTodo, clearDisplay } from './display';
 import { save, load } from './storage';
-import { generateProjectForm, generateTodoForm, generateDarkDiv, clearForm } from './forms';
+import { generateProjectForm, generateTodoForm, clearForm } from './forms';
+import { emptyWarning, clearWarning, noTitleWarning } from './warnings';
 
 //Sets up a 'main' project that will hold all To Dos on the first run
 function setupStart() {
@@ -11,26 +12,6 @@ function setupStart() {
     if (projects.length == 0) { projects.push(project); }
 
     return projects;
-}
-
-export function createProject(title, projects) {
-    const newProject = new Project(title);
-    const check = document.querySelector('.form-check');
-    const todos = projects[0].todos;
-
-    if(check != null && check.checked == true) {
-        const selected = document.querySelectorAll('li[selected] a');
-
-        selected.forEach(item => {
-            for(let i = 0; i < todos.length; i++) 
-                if(todos[i].name == item.textContent) { newProject.addTodo(todos[i]); }
-        });
-    }
-
-    projects.push(newProject);
-    save(projects);
-    clearForm();
-    generateProjects(projects);
 }
 
 export function createTodo(title, description, date, priority, projects) {
@@ -77,6 +58,26 @@ function clearProjects() {
     sidebar.lastChild.remove();
 }
 
+export function createProject(title, projects) {
+    const newProject = new Project(title);
+    const check = document.querySelector('.form-check');
+    const todos = projects[0].todos;
+
+    if(check != null && check.checked == true) {
+        const selected = document.querySelectorAll('li[selected] a');
+
+        selected.forEach(item => {
+            for(let i = 0; i < todos.length; i++) 
+                if(todos[i].name == item.textContent) { newProject.addTodo(todos[i]); }
+        });
+    }
+
+    projects.push(newProject);
+    save(projects);
+    clearForm();
+    generateProjects(projects);
+}
+
 function editProject(projectItem, projects) {
     generateProjectForm(projects, 1);
     const data = projectItem.data;
@@ -93,8 +94,12 @@ function editProject(projectItem, projects) {
     newSubmitBtn.addEventListener('click', () => {
         const title = titleInput.value;
 
-        deleteProject(projectItem, projects);
-        createProject(title, projects);
+        if(title == '')
+            noTitleWarning(titleInput);
+        else {
+            deleteProject(projectItem, projects);
+            createProject(title, projects);
+        }
     });
 }
 
@@ -122,6 +127,10 @@ function deleteProject(projectItem, projects) {
     generateProjects(projects);
 }
 
+function setStatus(todoItem) {
+    todoItem.classList.toggle('concluded');
+}
+
 function showTodos(projectItem, projects) {
     if(projectItem.data.todos.length == 0) { 
         projectItem.toggleAttribute('empty');
@@ -142,32 +151,21 @@ function showTodos(projectItem, projects) {
     todos.map(todo => {
         const todoItem = document.createElement('li');
         const todoTitle = document.createElement('a');
+        const todoCheck = document.createElement('input');
+        todoCheck.type = 'checkbox';
         todoItem.data = todo;
         todoTitle.textContent = todoItem.data.name;
         todoItem.addEventListener('click', (e) => displayTodo(e, projects));
-    
+        todoCheck.addEventListener('click', () => setStatus(todoItem));
+        
         todoItem.appendChild(todoTitle);
+        //todoItem.appendChild(todoCheck);
         todoDiv.appendChild(todoItem);
     });
     projectItem.appendChild(todoDiv);
 }
 
-function emptyWarning() {
-    const sidebar = document.querySelector('.sidebar');
-    const warningDiv = document.createElement('div');
-    const warningText = document.createElement('h3');
-    const warningDescription = document.createElement('p');
-
-    warningDiv.classList.add('empty-warning');
-    warningText.textContent = 'It appears you have no Projects or To Dos.';
-    warningDescription.textContent = 'Start by creating either one with the \'+\' buttons!';
-
-    warningDiv.appendChild(warningText);
-    warningDiv.appendChild(warningDescription);
-    sidebar.appendChild(warningDiv);
-}
-
-function clearTodos(projects) {
+export function clearTodos(projects) {
     projects.forEach(project => {
         project._todos = [];
     });
@@ -176,30 +174,6 @@ function clearTodos(projects) {
     clearDisplay();
     clearForm();
     generateProjects(projects);
-}
-
-function clearWarning(projects) {
-    const darkDiv = generateDarkDiv();
-    const warningDiv = document.createElement('div');
-    const warningText = document.createElement('h3');
-    const yesBtn = document.createElement('button');
-    const noBtn = document.createElement('button');
-
-    warningDiv.classList.add('clear-warning');
-    warningText.textContent = 'Are you sure you want to delete all To Dos?';
-    yesBtn.classList.add('yes-btn');
-    noBtn.classList.add('no-btn');
-    yesBtn.textContent = 'Yes';
-    noBtn.textContent = 'No';
-
-    yesBtn.addEventListener('click', () => clearTodos(projects));
-    noBtn.addEventListener('click', () => clearForm());
-
-    warningDiv.appendChild(warningText);
-    warningDiv.appendChild(yesBtn);
-    warningDiv.appendChild(noBtn);
-    darkDiv.appendChild(warningDiv);
-    document.body.appendChild(darkDiv);
 }
 
 export function generateProjects(projects) {

@@ -1,6 +1,7 @@
 import { save } from './storage';
 import { generateProjects, createTodo } from './sidebar';
 import { generateTodoForm } from './forms';
+import { noTitleWarning } from './warnings';
 
 export function clearDisplay() {
     const todoDiv = document.querySelector('.display-todo');
@@ -33,8 +34,12 @@ function editTodo(todoDiv, projects) {
         const date = dateInput.value;
         const priority = priorityInput.value;
 
-        deleteTodo(todoDiv, projects);
-        createTodo(title, description, date, priority, projects);
+        if(title == '')
+            noTitleWarning(titleInput);
+        else {
+            deleteTodo(todoDiv, projects);
+            createTodo(title, description, date, priority, projects);
+        }
     });
 }
 
@@ -89,7 +94,7 @@ function displayTodoData(e) {
     todoDiv.data = data;
 
     todoTitle.textContent = data.name;
-    todoDescription.textContent = 'Description: ' + data.description;
+    todoDescription.textContent = data.description;
     todoDueDate.textContent = 'Due Date: ' + data.dueDate;
     todoPriority.textContent = 'Priority: ' + data.priority;
 

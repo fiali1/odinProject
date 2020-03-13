@@ -1,4 +1,5 @@
 import { createProject, createTodo } from './sidebar';
+import { noTitleWarning } from './warnings';
 
 //Removes the div that holds the form
 export function clearForm() {
@@ -111,7 +112,10 @@ export function generateTodoForm(projects, opr) {
         const date = dateInput.value;
         const priority = priorityInput.value;
 
-        createTodo(title, description, date, priority, projects);
+        if (title == '') 
+            noTitleWarning(titleInput, 1);
+        else
+            createTodo(title, description, date, priority, projects); 
     });
     cancelBtn.addEventListener('click', () => {
         clearForm(formDiv);
@@ -172,7 +176,11 @@ export function generateProjectForm(projects, opr) {
     
     submitBtn.addEventListener('click', () => {
         const title = titleInput.value;
-        createProject(title, projects);
+
+        if(title == '')
+            noTitleWarning(titleInput, 1);
+        else
+            createProject(title, projects);
     });
     cancelBtn.addEventListener('click', () => {
         clearForm(formDiv);

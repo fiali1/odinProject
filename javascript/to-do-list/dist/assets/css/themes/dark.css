@@ -63,14 +63,6 @@ body {
     background-color: #724930;
 }
 
-.project-item ul li {
-    background-color: #363636;
-}
-
-.project-item ul li:hover {
-    background-color: #414141;
-}
-
 .project-item ul li:active {
     background-color: #353535;
 }

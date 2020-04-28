@@ -1,0 +1,172 @@
+.off {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.todos-profile-btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-sort {
+    width: 240px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.dropdown-sort p {
+    width: 80%;
+    margin: auto;
+    align-self: center;
+    font-weight: bold;
+    text-align: right;
+}
+
+.dropdown-content {
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+}
+
+.dropdown-btn {
+    width: 100%;
+}
+
+.dropdown-list {
+    width: 100%;
+    height: 130px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.25s linear;
+}
+
+.dropdown-content:hover > .dropdown-list {
+    border-radius: 3px;
+
+    visibility: visible;
+    opacity: 1;
+    color: #333;
+}
+
+.dropdown-list p {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 7px 10px;
+    background-color: #666;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #CCC;
+    border-bottom: 1.5px solid #444;
+}
+
+.dropdown-list p:first-of-type {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.dropdown-list p:last-of-type {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.dropdown-list p:hover {
+    color: #CCC;
+    background: #444;
+}
+
+.todos-container {
+    width: 100%;
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.todo-profile {
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background: #222;
+    transition: 0.2s ease;
+}
+
+.todo-profile-info {
+    padding: 0 10px;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.todo-profile-info input {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.todo-profile-info input {
+    margin-bottom: 0;
+}
+
+.todo-profile-info h3 {
+    font-size: 1.5em;
+}
+
+.todo-profile-btns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.todo-profile-btns button {
+    width: 100px;
+}
+
+.todo-profile-empty {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.todo-profile-empty h3 span {
+    color: #da783b;
+}
+
+.logout:hover {
+    background-color: #ca2828;
+}
+
+.delete {
+    color: #EEE;
+    background-color: #cf5353;
+}
+
+.delete:hover {
+    background-color: #ca2828;
+}
+
+[done="1"] > .todo-profile-info {
+    text-decoration: line-through;
+}
+
+[done="1"] {
+    background: #181818;
+}

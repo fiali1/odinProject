@@ -53,3 +53,7 @@
 .register-info form input {
     margin-bottom: 10px;
 }
+
+.register-info form button:first-of-type {
+    margin-bottom: 10px;
+}

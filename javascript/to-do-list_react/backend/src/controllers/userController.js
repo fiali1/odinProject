@@ -22,6 +22,17 @@ module.exports = {
         return response.json(users);
     },
 
+    async details(request, response) {
+        const {id} = request.params;
+
+        const user = await connection('users')
+            .where('id', id)
+            .select('username', 'password')
+            .first()
+        
+        return response.json(user);
+    },
+
     async edit(request, response) {
         const {id} = request.params;
         const {username, password} = request.body;

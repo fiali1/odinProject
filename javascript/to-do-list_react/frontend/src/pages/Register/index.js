@@ -16,8 +16,12 @@ function Register() {
 
         try {
             const response = await api.post('users', {username, password});
-            alert('Your ID is ' + response.data.id);
+            api.post('preferences', {
+                user_id: response.data.id
+            });
 
+            alert('Your ID is ' + response.data.id);
+            
             history.push('/');
         } catch (error) {
             console.log(error.response);
@@ -45,8 +49,8 @@ function Register() {
                             onChange={e => setPassword(e.target.value)}
                         />
                         <button className="button">Register</button>
+                        <Link to="/" className="button cancel">Go back</Link>
                     </form>
-                    <Link to="/" className="link">Go back</Link>
                 </div>
             </div>
         </div>

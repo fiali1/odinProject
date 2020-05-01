@@ -5,10 +5,15 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 body {
     color: #CCC;
     background: #0a0a0a;
     -webkit-font-smoothing: antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 span {
@@ -23,6 +28,7 @@ input, textarea {
     border: none;
     border-radius: 2px;
     margin-bottom: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 input[type="checkbox"] {
@@ -69,19 +75,11 @@ button:hover, .button:hover {
     color: #CCC;
     font-weight: bold;
     text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .link:hover {
     color: #da783b;
-}
-
-.profile {
-    width: 500px;
-    margin: auto;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
 }
 
 .profile-info {
@@ -104,4 +102,23 @@ button:hover, .button:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+
+::-webkit-scrollbar-track {
+    background: #222;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #484848;
 }

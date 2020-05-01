@@ -79,7 +79,7 @@ function TodoDetails() {
                 <div className="profile-info">
                     <h1>{user_username}</h1>
                     <div className="profile-btns">
-                        <button className="button settings" >Settings</button>    
+                        <Link to="/settings" from='/todos/details' className="button">Settings</Link>    
                         <button className="button logout" onClick={handleLogout}>Logout</button>    
                     </div>
                 </div>

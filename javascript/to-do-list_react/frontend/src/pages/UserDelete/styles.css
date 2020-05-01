@@ -1,0 +1,54 @@
+.delete-user {
+    position: absolute;
+    top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    background: #222;
+    border-radius: 5px;
+}
+
+.delete-user h3 {
+    padding: 0 15px;
+    margin-bottom: 5px;
+}
+
+.delete-user-form {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.delete-user-form span {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.delete-user-form input, .delete-user-form textarea {
+    margin-bottom: 10px;
+}
+
+.delete-user-form input[type="radio"] {
+    margin-bottom: 0;
+}
+
+.delete-user-form button:first-of-type {
+    margin-bottom: 10px;
+}
+
+.cancel {
+    color: #EEE;
+    background-color: #cf5353;
+}
+
+.cancel:hover {
+    background-color: #ca2828;
+}

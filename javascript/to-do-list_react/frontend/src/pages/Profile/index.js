@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
-import convertDate from '../../utils/convertDate';
+import sortDate from '../../utils/sortDate';
 
 import './styles.css';
 
@@ -74,9 +74,9 @@ function Profile() {
             case '2':
                 setTodos(todos.slice(0).sort((a, b) => {
                     if (dueDateParameter)
-                        return (convertDate(a, b));
+                        return (sortDate(a, b));
                     else 
-                        return(convertDate(a, b) === 1 ? -1 : 1);
+                        return(sortDate(a, b) === 1 ? -1 : 1);
                 }));
                 button.textContent = dueDateParameter ? 'Due Date ↓' : 'Due Date ↑';
                 setDueDateParameter(!dueDateParameter);

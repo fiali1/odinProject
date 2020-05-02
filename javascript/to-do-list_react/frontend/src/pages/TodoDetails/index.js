@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import convertPriority from '../../utils/convertPriority';
+import convertDate from '../../utils/convertDate';
 
 import './styles.css';
 
@@ -100,7 +101,7 @@ function TodoDetails() {
                             </div>
                         <div className="todo-details-extras">
                             <h3>{todo.description}</h3>
-                            <p><strong>Due date:</strong> {todo.dueDate}</p>
+                            <p><strong>Due date:</strong> {convertDate(todo.dueDate)}</p>
                             <p><strong>Priority:</strong> {convertPriority(todo.priority)}</p>
                         </div>
                     </div>

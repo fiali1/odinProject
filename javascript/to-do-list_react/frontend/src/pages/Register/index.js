@@ -39,6 +39,7 @@ function Register() {
                         <input 
                             type="text" 
                             value={username}
+                            spellCheck="false"
                             onChange={e => setUsername(e.target.value)}
                         />
                         <span>Password</span>

@@ -70,7 +70,7 @@ function TodoDetails() {
 
     }
 
-    function checkStatus() {
+    async function checkStatus() {
         console.log(todo);
     }
 

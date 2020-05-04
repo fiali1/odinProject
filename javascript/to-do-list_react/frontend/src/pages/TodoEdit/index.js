@@ -69,7 +69,7 @@ function TodoEdit() {
                             type="radio" 
                             id="low-priority" 
                             name="priority" 
-                            onChange={e => setPriority(0)} 
+                            onChange={() => setPriority(0)} 
                             required 
                         />
                         <label 
@@ -81,7 +81,7 @@ function TodoEdit() {
                             type="radio" 
                             id="medium-priority" 
                             name="priority"
-                            onChange={e => setPriority(1)} 
+                            onChange={() => setPriority(1)} 
                             required />
                         <label 
                             htmlFor="medium-priority">
@@ -92,7 +92,7 @@ function TodoEdit() {
                             type="radio" 
                             id="high-priority" 
                             name="priority" 
-                            onChange={e => setPriority(2)} 
+                            onChange={() => setPriority(2)} 
                             required 
                         />
                         <label 

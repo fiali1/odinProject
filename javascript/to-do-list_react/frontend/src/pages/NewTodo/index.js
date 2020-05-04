@@ -58,11 +58,11 @@ function NewTodo() {
 
                     <span>Priority</span>
                     <div className="priority-radio">
-                        <input type="radio" id="low-priority" name="priority" onChange={e => setPriority(0)} required />
+                        <input type="radio" id="low-priority" name="priority" onChange={() => setPriority(0)} required />
                         <label htmlFor="low-priority">Low</label><br />
-                        <input type="radio" id="medium-priority" name="priority" onChange={e => setPriority(1)} required />
+                        <input type="radio" id="medium-priority" name="priority" onChange={() => setPriority(1)} required />
                         <label htmlFor="medium-priority">Medium</label><br />
-                        <input type="radio" id="high-priority" name="priority" onChange={e => setPriority(2)} required />
+                        <input type="radio" id="high-priority" name="priority" onChange={() => setPriority(2)} required />
                         <label htmlFor="high-priority">High</label><br />
                     </div>
                     <button className="button submit" type="submit">Submit</button>

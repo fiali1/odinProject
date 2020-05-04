@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import './styles.css';
 
-function Settings(props) {
+function Settings() {
     const user_username = localStorage.getItem('user_username');
 
     const history = useHistory();
@@ -29,7 +29,6 @@ function Settings(props) {
                     </div>
                 </div>
                 <div className="settings-list">
-                    <Link className="button settings-item" to="/themes">Change Theme</Link>
                     <Link className="button settings-item" to="/users/edit">Edit profile</Link>
                     <Link className="button delete settings-item" to="/users/delete">Delete profile</Link>
                 </div>

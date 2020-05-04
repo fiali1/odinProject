@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -32,8 +33,7 @@ function Logon() {
                 default:
                     return;
             }
-        }
-        
+        }   
     }
 
     return (
@@ -48,6 +48,7 @@ function Logon() {
                             type="text" 
                             value={username}
                             onChange={e => setUsername(e.target.value)}
+                            spellCheck="false"
                             required
                         />
                         <span>Password</span>

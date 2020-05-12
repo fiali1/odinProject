@@ -13,11 +13,6 @@ routes.post('/users', userController.create);
 routes.put('/users/:id', userController.edit);
 routes.delete('/users/:id', userController.delete);
 
-routes.get('/preferences', preferenceController.index);
-routes.get('/preferences/:user_id', preferenceController.details);
-routes.post('/preferences', preferenceController.create);
-routes.put('/preferences/:user_id', preferenceController.edit);
-
 routes.post('/session', sessionController.create);
 
 routes.get('/profile', profileController.index);

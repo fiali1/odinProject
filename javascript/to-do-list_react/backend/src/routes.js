@@ -2,7 +2,6 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const sessionController = require('./controllers/sessionController');
 const profileController = require('./controllers/profileController');
-const preferenceController = require('./controllers/preferenceController');
 const todoController = require('./controllers/todoController');
 
 const routes = express.Router();

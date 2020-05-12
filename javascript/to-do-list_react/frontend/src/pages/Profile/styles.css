@@ -11,6 +11,20 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.function-btns {
+    height: 100%;
+    width: 50%;
+}
+
+.function-btns .button {
+    vertical-align: middle;
+}
+
+.function-btns .create-todo {
+    margin-right: 10px;
 }
 
 .dropdown-sort {
@@ -22,7 +36,7 @@
 .dropdown-sort p {
     width: 80%;
     margin: auto;
-    align-self: center;
+    padding-bottom: 2px;
     font-weight: bold;
     text-align: right;
 }
@@ -92,6 +106,18 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
+}
+
+.empty-warning {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    line-height: 1.75em;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .todo-profile {

@@ -52,7 +52,7 @@ function TodoEdit() {
     return (
         <div className="container">
             <div className="edit-todo">
-                <h2>Enter your Todo info</h2>
+                <h2>Update your Todo info</h2>
                 <form className="edit-todo-form" onSubmit={handleEditTodo}>
                     <span>Title</span>
                     <input type="text" defaultValue={todo.title} onChange={e => setTitle(e.target.value)} required />

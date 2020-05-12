@@ -23,7 +23,15 @@ function Profile() {
                 Authorization: user_id, 
             }
         }).then(response => {
-            setTodos(response.data);
+            if (response.data.length === 0) {
+                const tc = document.querySelector('.todos-container');
+                const empty = document.createElement('div');
+                empty.classList.add('empty-warning');
+                empty.textContent = "It appears that you have no todos. Create one using the '+' button above!";
+                tc.appendChild(empty);
+            } else {
+                setTodos(response.data);
+            }
         });
     }, [user_id]);
 
@@ -41,6 +49,8 @@ function Profile() {
     function setParameter(target) {
         const button = document.querySelector('#parameter');
         const parameter = target.getAttribute('parameter');
+
+        localStorage.setItem('parameter', parameter);
 
         switch (parameter) {
             case '0':
@@ -152,6 +162,16 @@ function Profile() {
             }
         });
 
+        const newTodos = todos.filter(todo => todo.id !== id);
+
+        if (newTodos.length === 0) {
+            const tc = document.querySelector('.todos-container');
+            const empty = document.createElement('div');
+            empty.classList.add('empty-warning');
+            empty.textContent = "It appears that you have no todos. Create one using the '+' button above!";
+            tc.appendChild(empty);
+        }
+        
         setTodos(todos.filter(todo => todo.id !== id));
     }
 
@@ -166,9 +186,11 @@ function Profile() {
                     </div>
                 </div>
                 <div className="todos-profile-btns">
-                    <Link className="button create-todo" to="/todos/new">
-                        + Todo
-                    </Link>
+                    <div className="function-btns">
+                        <Link className="button create-todo" to="/todos/new">
+                            + Todo
+                        </Link>
+                    </div>
                     <div className="dropdown-sort">
                         <p>Order by</p>
                         <div className="dropdown-content">
